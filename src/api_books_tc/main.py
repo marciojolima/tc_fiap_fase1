@@ -2,7 +2,7 @@ from http import HTTPStatus
 
 from fastapi import FastAPI
 
-from api_books_tc.api.v1.endpoints import books, users
+from api_books_tc.api.v1.endpoints import books, scraping, users
 from api_books_tc.schemas import MessageStatus
 
 app = FastAPI(
@@ -13,6 +13,7 @@ app = FastAPI(
 
 app.include_router(books.router)
 app.include_router(users.router)
+app.include_router(scraping.router)
 
 
 @app.get('/', status_code=HTTPStatus.OK, response_model=MessageStatus, tags=['Root'])

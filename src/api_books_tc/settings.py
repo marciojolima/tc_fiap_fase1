@@ -6,3 +6,4 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str
     CSV_PATH: str
+    SCRAPING_TARGET_URL: str

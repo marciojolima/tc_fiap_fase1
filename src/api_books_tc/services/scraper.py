@@ -4,15 +4,16 @@ import logging
 import os
 import re
 import time
+from pathlib import Path
 from typing import Dict, List, Optional
 
 import aiohttp
 from aiohttp_retry import ExponentialRetry, RetryClient
 from bs4 import BeautifulSoup
-from scrapper_exception import PaginatorNotFoundException, ScraperException
 
-TARGET_URL = 'https://books.toscrape.com/'
-OUTPUT_CSV_FILE = 'data/books.csv'
+from api_books_tc.services.scraper_exception import PaginatorNotFoundException, ScraperException
+from api_books_tc.settings import Settings
+
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
     '(KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0'
@@ -22,10 +23,11 @@ HEADERS = {
 class AsyncBookScraper:
     """Encapsula toda a lógica de scraping do site books.toscrape.com."""
 
-    def __init__(
-        self, base_url: str, max_concurrent_requests: int = 15, logger: logging.Logger = None
-    ):
-        self.base_url = base_url
+    TARGET_URL = Settings().SCRAPING_TARGET_URL
+    OUTPUT_CSV_FILE = Settings().CSV_PATH
+    _current_id: int = 0
+
+    def __init__(self, max_concurrent_requests: int = 15, logger: logging.Logger = None):
         self.max_concurrent_requests = max_concurrent_requests
         self.semaphore = asyncio.Semaphore(max_concurrent_requests)
         self.logger = logger
@@ -48,7 +50,7 @@ class AsyncBookScraper:
     async def _get_total_pages(self) -> int:
         """Encontra e retorna o número total de páginas da paginação do site"""
         # self.logger.info("Buscando o número total de páginas...")
-        bs4 = await self._get_bs4(self.base_url)
+        bs4 = await self._get_bs4(self.TARGET_URL)
 
         if not bs4:
             raise ScraperException('Não foi possível abrir a página inicial.')
@@ -65,19 +67,23 @@ class AsyncBookScraper:
         # self.logger.info(f"Total de páginas encontradas: {total_pages}")
         return total_pages
 
+    @staticmethod
     def _get_book_title(book: BeautifulSoup) -> str:
         return book.h3.a['title']
 
+    @staticmethod
     def _get_book_price(book: BeautifulSoup) -> float:
         price_text = book.find('p', class_='price_color').text
         pattern = r'\d+(\.\d+)?'
         match = re.search(pattern, price_text)
         return float(match.group(0))
 
+    @staticmethod
     def _get_book_availability(book: BeautifulSoup) -> bool:
         text = book.find('p', class_='instock availability').text.strip()
         return True if (text == 'In stock') else False
 
+    @staticmethod
     def _get_book_rating(book: BeautifulSoup) -> str:
         return book.find('p', class_='star-rating')['class'][1]
 
@@ -95,12 +101,9 @@ class AsyncBookScraper:
 
         return {'image_url': image_path, 'category': category}
 
-    def _get_csv_file_full_path() -> str:
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        parent_dir = os.path.dirname(script_dir)
-        return os.path.join(parent_dir, OUTPUT_CSV_FILE)
-
     async def _parse_book(self, book_bs4) -> Optional[List]:
+        self._current_id = self._current_id + 1
+        id = self._current_id
         title = self._get_book_title(book_bs4)
         price = self._get_book_price(book_bs4)
         availability = self._get_book_availability(book_bs4)
@@ -108,26 +111,27 @@ class AsyncBookScraper:
 
         # image and category
         path_book_detail = book_bs4.h3.a['href'].replace('catalogue/', '')
-        url_book_detail = TARGET_URL + 'catalogue/' + path_book_detail
+        url_book_detail = self.TARGET_URL + 'catalogue/' + path_book_detail
         details = await self._get_image_path_and_category(url_book_detail)
 
         if not details:
             raise ScraperException('Não foi possível abrir a página inicial.')
 
         return [
+            id,
             title,
             price,
             availability,
             rating,
             details['category'],
-            TARGET_URL + details['image_url'],
+            self.TARGET_URL + details['image_url'],
         ]
 
-    def _generate_page_urls(total_pages: int) -> List[str]:
+    def _generate_page_urls(self, total_pages: int) -> List[str]:
         """Gera lista de URLs para todas as páginas de paginação"""
         urls = []
         for page in range(1, total_pages + 1):
-            url = f'{TARGET_URL}catalogue/page-{page}.html'
+            url = f'{self.TARGET_URL}catalogue/page-{page}.html'
             urls.append(url)
         return urls
 
@@ -139,6 +143,7 @@ class AsyncBookScraper:
         print('Páginas obtidas!')
         return [page for page in all_pages_bs4 if page is not None]
 
+    @staticmethod
     def _extract_books_from_pages(pages_bs4: List[BeautifulSoup]) -> List[BeautifulSoup]:
         """Extrai todos os elementos de livros das páginas"""
         all_books = []
@@ -153,12 +158,25 @@ class AsyncBookScraper:
         book_parsing_tasks = [self._parse_book(book) for book in books_bs4]
         return await asyncio.gather(*book_parsing_tasks)
 
+    @staticmethod
     def _save_to_csv(books_data: List[List], csv_path: str):
         """Salva os dados dos livros em um arquivo CSV"""
+
+        csv_file = Path(csv_path).resolve()
         print(f'Escrevendo dados em: {csv_path}')
+        print(f'Escrevendo dados em (absoluto): {csv_file}')
 
         with open(csv_path, 'w', newline='', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile)
+            writer.writerow([
+                'id',
+                'title',
+                'price',
+                'rating',
+                'availability',
+                'category',
+                'image_url',
+            ])
             writer.writerows(books_data)
 
         print(f'Escrita concluída em: {csv_path}')
@@ -185,8 +203,7 @@ class AsyncBookScraper:
 
             books_data = await self._parse_all_books(books_bs4)
 
-            csv_path = self._get_csv_file_full_path()
-            self._save_to_csv(books_data, csv_path)
+            self._save_to_csv(books_data, self.OUTPUT_CSV_FILE)
 
         # permitir que a limpeza do aiohttp seja concluída sem erros.
         # se for windows, ele não esperar o aiohttp encerrar os trabalhos rsr
@@ -198,7 +215,7 @@ if __name__ == '__main__':
         asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
     start_time = time.time()
-    scraper = AsyncBookScraper(base_url=TARGET_URL)
+    scraper = AsyncBookScraper()
     asyncio.run(scraper.run())
     duration = time.time() - start_time
     print(f'\nTempo total de execução: {duration:.2f} segundos')
