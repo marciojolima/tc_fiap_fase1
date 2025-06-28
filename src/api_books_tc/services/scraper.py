@@ -102,7 +102,7 @@ class AsyncBookScraper:
         return {'image_url': image_path, 'category': category}
 
     async def _parse_book(self, book_bs4) -> Optional[List]:
-        self._current_id = self._current_id + 1
+        self._current_id += 1
         id = self._current_id
         title = self._get_book_title(book_bs4)
         price = self._get_book_price(book_bs4)
