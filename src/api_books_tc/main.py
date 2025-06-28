@@ -3,7 +3,7 @@ from http import HTTPStatus
 from fastapi import FastAPI
 
 from api_books_tc.api.v1.endpoints import books, users
-from api_books_tc.schemas.basics import Message
+from api_books_tc.schemas import MessageStatus
 
 app = FastAPI(
     title='Tech Challenge FIAP-6MELT grupo 28',
@@ -15,7 +15,13 @@ app.include_router(books.router)
 app.include_router(users.router)
 
 
-@app.get('/', status_code=HTTPStatus.OK, response_model=Message)
+@app.get('/', status_code=HTTPStatus.OK, response_model=MessageStatus, tags=['Root'])
 def read_root():
-    """ """
-    return {'status': 'API is running!!'}
+    """Endpoint de status"""
+    return {
+        'message': "Hello Book's World!",
+        'api': 'Books API - FIAP - Tech Challenge ',
+        'version': 'v1',
+        'status': 'running',
+        'description': 'CSV with pandas',
+    }

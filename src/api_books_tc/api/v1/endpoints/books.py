@@ -1,14 +1,24 @@
 from http import HTTPStatus
+from typing import Annotated
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, Query
+
+from api_books_tc.database import DataBaseManager
+from api_books_tc.schemas import BookBase, FilterBook
 
 router = APIRouter(prefix='/api/v1/books', tags=['Books'])
 
+FilterQueryBooks = Annotated[FilterBook, Query()]
+DataBase = Annotated[DataBaseManager, Depends()]
 
-@router.get('/', status_code=HTTPStatus.OK)
-async def get_hello_world_book():
+
+@router.get('/', status_code=HTTPStatus.OK, response_model=BookBase)
+async def get_books(db: DataBase, filter: FilterQueryBooks):
     """
     Endpoint de exemplo que retorna uma mensagem simples.
     Este será o nosso "Hello World" para a rota de livros.
     """
+
+    valor = db.load_books_from_csv()
+
     return {'message': 'Ola book!'}
