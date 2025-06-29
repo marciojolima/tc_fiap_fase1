@@ -21,10 +21,12 @@ class BookBase(BaseModel):
     availability: bool = Field(..., description='Disponibilidade do livro')
     category: str = Field(..., description='Categoria do livro')
     image_url: Optional[str] = Field(None, description='URL da imagem do livro')
+    model_config = ConfigDict(from_attributes=True)
 
 
 class BookSchema(BookBase):
     id: int
+    model_config = ConfigDict(from_attributes=True)
 
 
 class BooksList(BaseModel):

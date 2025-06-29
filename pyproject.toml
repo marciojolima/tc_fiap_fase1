@@ -33,6 +33,7 @@ pytest = "^8.4.1"
 pytest-cov = "^6.2.1"
 taskipy = "^1.14.1"
 ruff = "^0.12.0"
+factory-boy = "^3.3.3"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -60,7 +61,7 @@ pre_format = 'ruff check --fix'
 format = 'ruff format'
 run = 'fastapi dev src/api_books_tc/main.py'
 pre_test = 'task lint'
-test = 'pytest -s -x --cov=fast_zero -vv'
+test = 'pytest -s -x --cov=api_books_tc -vv'
 post_test = 'coverage html'
 
 [tool.coverage.run]
