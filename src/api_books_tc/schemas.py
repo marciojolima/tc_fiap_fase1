@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class Message(BaseModel):
@@ -18,23 +18,26 @@ class BookBase(BaseModel):
     title: str = Field(..., description='Título do livro')
     price: float = Field(..., ge=0, description='Preço do livro')
     rating: float = Field(..., ge=0, le=5, description='Avaliação do livro (0-5)')
-    availability: str = Field(..., description='Disponibilidade do livro')
+    availability: bool = Field(..., description='Disponibilidade do livro')
     category: str = Field(..., description='Categoria do livro')
     image_url: Optional[str] = Field(None, description='URL da imagem do livro')
 
 
-class Book(BookBase):
+class BookSchema(BookBase):
     id: int
 
 
 class BooksList(BaseModel):
     count_books: int
-    books: List[Book]
+    books: List[BookSchema]
+    model_config = ConfigDict(from_attributes=True)
 
 
 class FilterPage(BaseModel):
-    offset: int = Field(ge=0, default=0)
-    limit: int = Field(ge=0, default=10)
+    offset: int = Field(default=None, ge=0, description='Número de registros a pular (offset)')
+    limit: int = Field(
+        default=None, ge=0, description='Número máximo de registros a retornar (limit)'
+    )
 
 
 class FilterBook(FilterPage):
