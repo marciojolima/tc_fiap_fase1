@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 from api_books_tc.database import get_session
 from api_books_tc.models import Book
-from api_books_tc.schemas import BooksList, FilterBook, BookSchema
+from api_books_tc.schemas import BookSchema, BooksList, FilterBook
 
 router = APIRouter(prefix='/api/v1/books', tags=['Books'])
 
@@ -43,12 +43,13 @@ def get_books(session: SessionAnno, param_request: FilterQueryBooks):
 
     return {'books': books, 'count_books': count_books}
 
+
 @router.get('/{book_id}', status_code=HTTPStatus.OK, response_model=BookSchema)
-def get_book_by_id(book_id:int, session: SessionAnno):
+def get_book_by_id(book_id: int, session: SessionAnno):
     """
     Obtém um livro específico pelo seu ID.
     """
     query = select(Book).where(Book.id == book_id)
-    book =session.scalar(query)
+    book = session.scalar(query)
 
     return book
