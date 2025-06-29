@@ -85,7 +85,21 @@ class AsyncBookScraper:
 
     @staticmethod
     def _get_book_rating(book: BeautifulSoup) -> str:
-        return book.find('p', class_='star-rating')['class'][1]
+        rating_text = book.find('p', class_='star-rating')['class'][1]
+        word_to_num = {
+            'zero': 0.0,
+            'one': 1.0,
+            'two': 2.0,
+            'three': 3.0,
+            'four': 4.0,
+            'five': 5.0,
+            'six': 6.0,
+            'seven': 7.0,
+            'eight': 8.0,
+            'nine': 9.0,
+            'ten': 10.0,
+        }
+        return word_to_num.get(rating_text.lower(), 0.0)
 
     async def _get_image_path_and_category(self, url_book_detail: str) -> Dict:
         """Também precisa ser assíncrona"""
@@ -172,8 +186,8 @@ class AsyncBookScraper:
                 'id',
                 'title',
                 'price',
-                'rating',
                 'availability',
+                'rating',
                 'category',
                 'image_url',
             ])
