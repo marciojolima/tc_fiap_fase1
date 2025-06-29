@@ -24,20 +24,43 @@ def client(session):
     app.dependency_overrides.clear()
 
 
-@pytest.fixture
-def session():
-    engine = create_engine(
+# Apenas uma vez por execução de testes
+@pytest.fixture(scope='session')
+def engine():
+    """Cria um engine SQLite em memória para toda a sessão de testes."""
+    return create_engine(
         'sqlite:///:memory:',
         connect_args={'check_same_thread': False},
         poolclass=StaticPool,
     )
+
+
+# Executa para cada função de teste
+@pytest.fixture
+def tables(engine):
+    """Cria as tabelas antes de cada teste e as derruba depois."""
     table_registry.metadata.create_all(engine)
-
-    Session = sessionmaker(bind=engine)
-    with Session() as session:
-        yield session
-
+    yield
     table_registry.metadata.drop_all(engine)
+
+
+@pytest.fixture
+def session(engine, tables):
+    """
+    Cria uma nova sessão para um teste, garantindo o isolamento.
+    Usa a fixture 'tables' para garantir que as tabelas existam.
+    """
+    # Cria uma conexão para a duração do teste
+    with engine.connect() as connection:
+        transaction = connection.begin()
+        Session = sessionmaker(bind=connection)
+        session = Session()
+
+        try:
+            yield session
+        finally:
+            session.close()
+            transaction.rollback()
 
 
 @pytest.fixture
