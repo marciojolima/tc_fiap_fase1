@@ -63,3 +63,16 @@ def test_get_books_serach_by_title(client, books_dummy):
     assert len(response.json()['books']) == count_books
     assert 'title' in response.json()['books'][0]
     assert fake_books == response.json()['books']
+
+
+def test_get_books_by_id(client, books_dummy):
+    # Arrange
+    fake_books = books_dummy(3)  # noqa
+
+    # Act
+    response = client.get('/api/v1/books/2')
+
+    # Assert
+    assert response.status_code == HTTPStatus.OK
+    assert 'title' in response.json()
+    assert 2 == response.json()['id']  # noqa

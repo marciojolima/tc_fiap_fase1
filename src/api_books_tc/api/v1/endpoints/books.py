@@ -21,7 +21,7 @@ def get_books(session: SessionAnno, param_request: FilterQueryBooks):
     Os endpoints
     GET /api/v1/books
     GET /api/v1/books/search?title={title}&category={category}
-    foram agrupados
+    foram agrupadas? GET /api/v1/books
     """
 
     query = select(Book)
