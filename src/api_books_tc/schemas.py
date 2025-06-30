@@ -35,6 +35,21 @@ class BooksList(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+class CategoriesList(BaseModel):
+    total_categories: int
+    categories: List[str]
+
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            'example': {
+                'count_categories': 5,
+                'categories': ['Biography', 'Fantasy', 'Fiction', 'History', 'Science'],
+            }
+        },
+    )
+
+
 class FilterPage(BaseModel):
     offset: int = Field(default=None, ge=0, description='Número de registros a pular (offset)')
     limit: int = Field(
