@@ -64,7 +64,7 @@ def session(engine, tables):
 
 
 @pytest.fixture
-def books_dummy(session):
+def books_dummy_in_db(session):
     def _create_books(count: int, **kwargs):
         BookFactory._meta.sqlalchemy_session = session
         BookFactory._meta.sqlalchemy_session_persistence = 'commit'
