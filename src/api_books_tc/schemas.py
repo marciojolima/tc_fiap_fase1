@@ -21,7 +21,19 @@ class BookBase(BaseModel):
     availability: bool = Field(..., description='Disponibilidade do livro')
     category: str = Field(..., description='Categoria do livro')
     image_url: Optional[str] = Field(None, description='URL da imagem do livro')
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            'example': {
+                'title': 'The Great Adventure',
+                'price': 29.99,
+                'rating': 4.5,
+                'availability': True,
+                'category': 'Fiction',
+                'image_url': 'https://example.com/book.jpg',
+            }
+        },
+    )
 
 
 class BookSchema(BookBase):
@@ -30,14 +42,41 @@ class BookSchema(BookBase):
 
 
 class BooksList(BaseModel):
-    count_books: int
-    books: List[BookSchema]
-    model_config = ConfigDict(from_attributes=True)
+    count_books: int = Field(description='Número total de livros')
+    books: List[BookSchema] = Field(..., description='Lista de livros')
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            'example': {
+                'count_books': 2,
+                'books': [
+                    {
+                        'id': 1,
+                        'title': 'The Great Adventure',
+                        'price': 29.99,
+                        'rating': 4.5,
+                        'availability': True,
+                        'category': 'Fiction',
+                        'image_url': 'https://example.com/book1.jpg',
+                    },
+                    {
+                        'id': 2,
+                        'title': 'History Unveiled',
+                        'price': 39.99,
+                        'rating': 4.0,
+                        'availability': False,
+                        'category': 'History',
+                        'image_url': 'https://example.com/book2.jpg',
+                    },
+                ],
+            }
+        },
+    )
 
 
 class CategoriesList(BaseModel):
-    total_categories: int
-    categories: List[str]
+    count_categories: int = Field(description='Número total de categorias')
+    categories: List[str] = Field(description='Lista de categorias')
 
     model_config = ConfigDict(
         from_attributes=True,
@@ -58,5 +97,9 @@ class FilterPage(BaseModel):
 
 
 class FilterBook(FilterPage):
-    title: str | None = Field(default=None, min_length=5, max_length=20)
+    title: str | None = Field(default=None, min_length=5, max_length=30)
     category: str | None = Field(default=None)
+
+
+class FilterCategory(BaseModel):
+    name: str | None = Field(default=None, min_length=1, max_length=20)

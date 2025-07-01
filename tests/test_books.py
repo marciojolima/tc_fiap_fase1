@@ -1,11 +1,11 @@
 from http import HTTPStatus
 
-import factory
+from factory import Iterator
 
 
 def test_get_books(client, books_dummy_in_db):
     # Arrange
-    count_books = 2
+    count_books = 3
     fake_books = books_dummy_in_db(count_books)
 
     # Act
@@ -53,7 +53,7 @@ def test_get_books_search_by_title(client, books_dummy_in_db):
     count_books = 10
     start_n = 1
     titles = [f'titulo Sequencial {i + start_n}' for i in range(count_books)]
-    books_dummy_in_db(count_books, title=factory.Iterator(titles))
+    books_dummy_in_db(count_books, title=Iterator(titles))
 
     # Act
     response = client.get('/api/v1/books/?title=titulo Sequencial 3')
@@ -94,3 +94,34 @@ def test_get_books_by_id(client, books_dummy_in_db):
     assert response.status_code == HTTPStatus.OK
     assert 'title' in response.json()
     assert 2 == response.json()['id']  # noqa
+
+
+def test_get_categories(client, books_dummy_in_db, session):
+    # Arrange
+    count_books = 12
+    choices = ['Childhood', 'Childrens', 'Fantasy', 'Fiction', 'Mystery', 'Sci-Fi']
+    categories_dummies = Iterator(choices)
+    books_dummy_in_db(count_books, category=categories_dummies)
+
+    # Act
+    response = client.get('/api/v1/categories')
+
+    # Assert
+    assert response.status_code == HTTPStatus.OK
+    assert len(choices) == response.json()['count_categories']
+    assert choices == response.json()['categories']
+
+
+def test_get_categorie_filter_by_name(client, books_dummy_in_db, session):
+    # Arrange
+    count_books = 12
+    choices = ['Childhood', 'Childrens', 'Fantasy', 'Fiction', 'Mystery', 'Sci-Fi']
+    categories_dummies = Iterator(choices)
+    books_dummy_in_db(count_books, category=categories_dummies)
+
+    # Act
+    response = client.get('/api/v1/categories/?name=Child')
+
+    # Assert
+    assert response.status_code == HTTPStatus.OK
+    assert 2 == response.json()['count_categories']  # noqa

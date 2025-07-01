@@ -7,11 +7,12 @@ from sqlalchemy.orm import Session
 
 from api_books_tc.database import get_session
 from api_books_tc.models import Book
-from api_books_tc.schemas import BookSchema, BooksList, CategoriesList, FilterBook
+from api_books_tc.schemas import BookSchema, BooksList, CategoriesList, FilterBook, FilterCategory
 
 router = APIRouter(prefix='/api/v1', tags=['Books'])
 
 FilterQueryBooks = Annotated[FilterBook, Query()]
+FilterQueryCategories = Annotated[FilterCategory, Query()]
 SessionAnno = Annotated[Session, Depends(get_session)]
 
 
@@ -56,12 +57,17 @@ def get_book_by_id(book_id: int, session: SessionAnno):
 
 
 @router.get('/categories/', status_code=HTTPStatus.OK, response_model=CategoriesList)
-def get_books_categories(session: SessionAnno):
+def get_books_categories(session: SessionAnno, param_request: FilterQueryCategories):
     """
     Obtém todas as categorias dos livros.
     """
+
     query = select(Book.category).distinct().order_by(Book.category)
+
+    if param_request.name:
+        query = query.filter(Book.category.contains(param_request.name))
+
     categories = session.scalars(query).all()
     count_categories = len(categories)
 
-    return {'categories': categories, 'count_categoires': count_categories}
+    return {'categories': categories, 'count_categories': count_categories}
