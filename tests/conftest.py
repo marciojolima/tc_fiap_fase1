@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import StaticPool, create_engine
 from sqlalchemy.orm import sessionmaker
 
-from api_books_tc.database import get_session
+from api_books_tc.database.connection import get_session
 from api_books_tc.main import app
 from api_books_tc.models import table_registry
 from api_books_tc.schemas import BookSchema

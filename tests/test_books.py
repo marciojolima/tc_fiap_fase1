@@ -108,7 +108,7 @@ def test_get_categories(client, books_dummy_in_db, session):
 
     # Assert
     assert response.status_code == HTTPStatus.OK
-    assert len(choices) == response.json()['count_categories']
+    assert len(choices) == response.json()['total']
     assert choices == response.json()['categories']
 
 
@@ -124,4 +124,4 @@ def test_get_categorie_filter_by_name(client, books_dummy_in_db, session):
 
     # Assert
     assert response.status_code == HTTPStatus.OK
-    assert 2 == response.json()['count_categories']  # noqa
+    assert 2 == response.json()['total']  # noqa

@@ -42,13 +42,13 @@ class BookSchema(BookBase):
 
 
 class BooksList(BaseModel):
-    count_books: int = Field(description='Número total de livros')
+    total: int = Field(description='Número total de livros')
     books: List[BookSchema] = Field(..., description='Lista de livros')
     model_config = ConfigDict(
         from_attributes=True,
         json_schema_extra={
             'example': {
-                'count_books': 2,
+                'total': 2,
                 'books': [
                     {
                         'id': 1,
@@ -75,14 +75,14 @@ class BooksList(BaseModel):
 
 
 class CategoriesList(BaseModel):
-    count_categories: int = Field(description='Número total de categorias')
+    total: int = Field(description='Número total de categorias')
     categories: List[str] = Field(description='Lista de categorias')
 
     model_config = ConfigDict(
         from_attributes=True,
         json_schema_extra={
             'example': {
-                'count_categories': 5,
+                'total': 5,
                 'categories': ['Biography', 'Fantasy', 'Fiction', 'History', 'Science'],
             }
         },
