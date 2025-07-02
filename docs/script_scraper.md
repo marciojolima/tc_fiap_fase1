@@ -6,11 +6,11 @@ Com certeza! Aqui está o arquivo Markdown atualizado para refletir o novo códi
 
 O fluxo está organizado de forma hierárquica, mostrando cada etapa do processo de extração de dados. Os pontos principais são:
 
-**🔧 Setup → 📊 Descoberta → 🌐 Busca Paralela → 🔍 Parsing Detalhado → 💾 Salvamento**
+**🔧 Setup → 📊 Descoberta → 🌐 Busca Paralela → 🔍 Parsing Detalhado → 💾 Persistência**
 
 A grande vantagem do script é o **duplo paralelismo**: primeiro, busca todas as páginas de listagem simultaneamente; depois, faz o parsing detalhado de cada livro, que inclui uma nova requisição à página de detalhes de cada livro, também em paralelo. Isso resulta em uma performance excelente.
 
-## 📋 Resumo Executivo
+## 📋 Resumo
 
 Script assíncrono em Python que extrai dados de livros do site `books.toscrape.com`, gerencia a concorrência de requisições, implementa uma estratégia de retry e salva os dados consolidados em um arquivo CSV.
 

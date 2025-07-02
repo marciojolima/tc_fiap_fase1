@@ -13,13 +13,16 @@ FilterQueryCategories = Annotated[FilterCategory, Query()]
 DBService = Annotated[BookDataBase, Depends()]
 
 
-@router.get('/books/', status_code=HTTPStatus.OK, response_model=BooksList)
+@router.get(
+    '/books/',
+    status_code=HTTPStatus.OK,
+    response_model=BooksList,
+    summary='Obs.: A rota "GET /api/v1/books/search?title={title}&category={category}'
+    '" está inclusa neste endpoint.',
+)
 def get_books(db: DBService, param_request: FilterQueryBooks):
     """
-    Os endpoints
-    GET /api/v1/books e
-    GET /api/v1/books/search?title={title}&category={category}
-    foram agrupados em GET /api/v1/books
+    Obtém todos os livros com opção de filtro pelos parâmetros title e category.
     """
 
     count_books, books = db.get_books(
