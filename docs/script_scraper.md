@@ -55,7 +55,7 @@ Script assíncrono em Python que extrai dados de livros do site `books.toscrape.
         *   **3. Extrair dados detalhados:**
             *   Categoria e URL da Imagem.
 
-*   **💾 Salvamento**
+*   **💾 Persistência**
     *   `_save_to_csv()`
         *   Criar arquivo `books.csv` no local definido.
         *   Escrever o cabeçalho e os dados de todos os livros.
