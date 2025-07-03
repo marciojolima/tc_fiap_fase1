@@ -109,7 +109,6 @@ class FilterCategory(BaseModel):
 class StatusServico(str, Enum):
     UP = 'up'
     DOWN = 'down'
-    model_config = ConfigDict(from_attributes=True)
 
 
 class StatusDependencia(BaseModel):

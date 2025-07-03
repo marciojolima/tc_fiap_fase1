@@ -45,8 +45,14 @@ class BookDataBase:
 
         return book
 
-    def get_books_top_rated(self):
+    def get_books_top_rated(self, offset: int, limit: int):
         query = select(self.model).distinct().order_by(desc(self.model.rating))
+
+        if offset is not None:
+            query = query.offset(offset)
+
+        if limit is not None:
+            query = query.limit(limit)
 
         books = self.session.scalars(query).all()
         count_books = self.session.scalar(select(func.count()).select_from(query.subquery()))

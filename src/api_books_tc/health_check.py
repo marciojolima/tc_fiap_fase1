@@ -19,6 +19,7 @@ class HeathAPI:
         self.internet_connectivity_error = None
 
     def check_db(self) -> bool:
+        """Faz uma consulta teste no banco de dados"""
         try:
             self.session.execute(text('SELECT 1'))
             self.db_status = 'up'

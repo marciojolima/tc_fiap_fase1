@@ -31,7 +31,6 @@ def get_health_status(hc: HealthService):
             'status': hc.internet_connectivity_status,
             'error': hc.internet_connectivity_error,
         },
-
     }
 
     if not is_healthy:

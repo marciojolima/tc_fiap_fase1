@@ -13,6 +13,11 @@ from tests.dummy_factory import BookFactory
 
 
 @pytest.fixture
+def app_books():
+    return app
+
+
+@pytest.fixture
 def client(session):
     def get_session_override():
         return session
@@ -74,3 +79,19 @@ def books_dummy_in_db(session):
         return books_dict
 
     return _create_books
+
+
+@pytest.fixture
+def mock_service_health():
+    class MockHealthAPI:
+        @classmethod
+        def run_all_checks(self):
+            return False
+
+        api_status = 'error'
+        db_status = 'disconnected'
+        db_error = 'Connection timeout'
+        internet_connectivity_status = 'offline'
+        internet_connectivity_error = 'No internet'
+
+    return MockHealthAPI()
