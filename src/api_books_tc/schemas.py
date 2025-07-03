@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -103,3 +104,33 @@ class FilterBook(FilterPage):
 
 class FilterCategory(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=20)
+
+
+class StatusServico(str, Enum):
+    UP = 'up'
+    DOWN = 'down'
+    model_config = ConfigDict(from_attributes=True)
+
+
+class StatusDependencia(BaseModel):
+    status: StatusServico = Field(description="O estado atual da dependência ('up' ou 'down').")
+    error: Optional[str] = Field(None, description="Mensagem de erro, caso o status seja 'down'.")
+    model_config = ConfigDict(from_attributes=True)
+
+
+class RespostaHealthCheck(BaseModel):
+    api_status: StatusServico = Field(description='O estado geral da API.')
+    database: StatusDependencia = Field(description='O estado da conexão com o banco de dados.')
+    internet_connectivity: StatusDependencia = Field(
+        description='O estado da conectividade com a internet.'
+    )
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            'api_status': 'up',
+            'dependencies': {
+                'database': {'status': 'up', 'error': None},
+                'internet_connectivity': {'status': 'up', 'error': None},
+            },
+        },
+    )

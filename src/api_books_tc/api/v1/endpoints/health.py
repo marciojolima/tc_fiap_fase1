@@ -4,6 +4,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
 
 from api_books_tc.health_check import HeathAPI
+from api_books_tc.schemas import RespostaHealthCheck
 
 router = APIRouter(tags=['Monitoring'])
 
@@ -15,16 +16,28 @@ HealthService = Annotated[HeathAPI, Depends()]
     tags=['Monitoring'],
     summary='Verifica a saúde da API e a conexão com o banco de dados',
     response_description='Retorna o status da API e do banco de dados',
+    response_model=RespostaHealthCheck,
 )
 def get_health_status(hc: HealthService):
-    if not hc.check_db():
+    is_healthy = hc.run_all_checks()
+
+    response_body = {
+        'api_status': hc.api_status,
+        'database': {
+            'status': hc.db_status,
+            'error': hc.db_error,
+        },
+        'internet_connectivity': {
+            'status': hc.internet_connectivity_status,
+            'error': hc.internet_connectivity_error,
+        },
+
+    }
+
+    if not is_healthy:
         raise HTTPException(
             status_code=HTTPStatus.SERVICE_UNAVAILABLE,
-            detail={
-                'api_status': hc.api_status,
-                'database_status': hc.db_status,
-                'database_error': f'Erro de conexão com o banco de dados {hc.db_error}',
-            },
+            detail=response_body,
         )
 
-    return {'api_status': hc.api_status, 'database_status': hc.db_status}
+    return response_body
