@@ -6,7 +6,7 @@ from fastapi import APIRouter
 from api_books_tc.services.scraper import AsyncBookScraper
 from api_books_tc.services.update_db_from_csv import update_db
 
-router = APIRouter(prefix='/api/v1/scraping/trigger', tags=['ADMIN'])
+router = APIRouter(prefix='/api/v1/scraping/trigger', tags=['Admin'])
 
 
 @router.post(
