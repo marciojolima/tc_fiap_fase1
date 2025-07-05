@@ -3,7 +3,7 @@ import random
 import factory
 from factory.alchemy import SQLAlchemyModelFactory
 
-from api_books_tc.models import Book
+from api_books_tc.models import Book, User
 
 
 class BookFactory(SQLAlchemyModelFactory):
@@ -16,3 +16,13 @@ class BookFactory(SQLAlchemyModelFactory):
     rating = factory.LazyAttribute(lambda n: round(random.uniform(1.0, 5.0), 1))
     image_url = factory.Faker('image_url')
     availability = factory.Faker('boolean')
+
+
+class UserFactory(SQLAlchemyModelFactory):
+    class Meta:
+        model = User
+
+    username = factory.Faker('user_name')
+    email = factory.Faker('email')
+    password = factory.Faker('password', length=16, special_chars=True)
+    is_admin = True

@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
 class Message(BaseModel):
@@ -35,6 +35,19 @@ class BookBase(BaseModel):
             }
         },
     )
+
+
+class UserBase(BaseModel):
+    username: str
+    email: EmailStr
+    password: str
+    is_admin: bool
+
+
+class UserResponse(UserBase):
+    id: int
+    password: str = Field(exclude=True)
+    model_config = ConfigDict(from_attributes=True)
 
 
 class BookSchema(BookBase):

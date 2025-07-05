@@ -8,8 +8,8 @@ from sqlalchemy.orm import sessionmaker
 from api_books_tc.database.connection import get_session
 from api_books_tc.main import app
 from api_books_tc.models import table_registry
-from api_books_tc.schemas import BookSchema
-from tests.dummy_factory import BookFactory
+from api_books_tc.schemas import BookSchema, UserSchema
+from tests.dummy_factory import BookFactory, UserFactory
 
 
 @pytest.fixture
@@ -69,7 +69,7 @@ def session(engine, tables):
 
 
 @pytest.fixture
-def books_dummy_in_db(session):
+def fake_books_in_db(session):
     def _create_books(count: int, **kwargs):
         BookFactory._meta.sqlalchemy_session = session
         BookFactory._meta.sqlalchemy_session_persistence = 'commit'
@@ -79,6 +79,19 @@ def books_dummy_in_db(session):
         return books_dict
 
     return _create_books
+
+
+@pytest.fixture
+def fake_users_in_db(session):
+    def _create_users(count: int, **kwargs):
+        UserFactory._meta.sqlalchemy_session = session
+        UserFactory._meta.sqlalchemy_session_persistence = 'commit'
+
+        users = list(UserFactory.create_batch(count, **kwargs))
+        users_dict = [UserSchema.model_validate(user).model_dump() for user in users]
+        return users_dict
+
+    return _create_users
 
 
 @pytest.fixture
