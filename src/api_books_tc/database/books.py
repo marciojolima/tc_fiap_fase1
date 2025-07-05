@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 from fastapi import Depends
 from sqlalchemy import desc, func, select
 from sqlalchemy.orm import Session
@@ -11,7 +13,9 @@ class BookDataBase:
         self.session = session
         self.model = Book
 
-    def get_books(self, offset: int, limit: int, title: str, category: str):
+    def get_books(
+        self, offset: int, limit: int, title: str, category: str
+    ) -> Tuple[int, List[Book]]:
         query = select(self.model)
 
         if title:
@@ -45,7 +49,7 @@ class BookDataBase:
 
         return book
 
-    def get_books_top_rated(self, offset: int, limit: int):
+    def get_books_top_rated(self, offset: int, limit: int) -> Tuple[int, List[Book]]:
         query = select(self.model).distinct().order_by(desc(self.model.rating))
 
         if offset is not None:
@@ -59,7 +63,7 @@ class BookDataBase:
 
         return count_books, books
 
-    def get_categories(self, name: str):
+    def get_categories(self, name: str) -> Tuple[int, str]:
         query = select(self.model.category).distinct().order_by(self.model.category)
 
         if name:

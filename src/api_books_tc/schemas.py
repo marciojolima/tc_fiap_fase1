@@ -42,11 +42,32 @@ class UserBase(BaseModel):
     email: EmailStr
     password: str
     is_admin: bool
+    model_config = ConfigDict(
+        from_attributes=True,
+        exclude={'id'},
+        json_schema_extra={
+            'username': 'username',
+            'email': 'tcchall@example.com',
+            'password': 'secret',
+            'is_admin': False,
+        },
+    )
 
 
 class UserResponse(UserBase):
     id: int
     password: str = Field(exclude=True)
+    model_config = ConfigDict(from_attributes=True)
+
+
+class UserList(BaseModel):
+    total: int = Field(description='Número total de usuários')
+    users: List[UserResponse] = Field(..., description='Lista de usuários')
+    model_config = ConfigDict(from_attributes=True)
+
+
+class UserCreated(UserBase):
+    id: int
     model_config = ConfigDict(from_attributes=True)
 
 

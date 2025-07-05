@@ -18,6 +18,13 @@ class BookFactory(SQLAlchemyModelFactory):
     availability = factory.Faker('boolean')
 
 
+class UserBaseNoModel:
+    username = factory.Faker('user_name')
+    email = factory.Faker('email')
+    password = factory.Faker('password', length=16, special_chars=True)
+    is_admin = False
+
+
 class UserFactory(SQLAlchemyModelFactory):
     class Meta:
         model = User
@@ -25,4 +32,4 @@ class UserFactory(SQLAlchemyModelFactory):
     username = factory.Faker('user_name')
     email = factory.Faker('email')
     password = factory.Faker('password', length=16, special_chars=True)
-    is_admin = True
+    is_admin = False

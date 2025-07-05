@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from api_books_tc.database.connection import get_session
 from api_books_tc.main import app
 from api_books_tc.models import table_registry
-from api_books_tc.schemas import BookSchema, UserSchema
+from api_books_tc.schemas import BookSchema, UserBase, UserCreated
 from tests.dummy_factory import BookFactory, UserFactory
 
 
@@ -87,8 +87,30 @@ def fake_users_in_db(session):
         UserFactory._meta.sqlalchemy_session = session
         UserFactory._meta.sqlalchemy_session_persistence = 'commit'
 
+        # create_batch persite (com sessão)
         users = list(UserFactory.create_batch(count, **kwargs))
-        users_dict = [UserSchema.model_validate(user).model_dump() for user in users]
+        users_dict = [UserCreated.model_validate(user).model_dump() for user in users]
+
+        return users_dict
+
+    return _create_users
+
+
+@pytest.fixture
+def fake_users():
+    def _create_users(count: int, exclude_id: bool = True, **kwargs):
+        if exclude_id:
+            users = list(UserFactory.build_batch(count, **kwargs))
+            users_dict = [UserBase.model_validate(user).model_dump() for user in users]
+
+            return users_dict
+
+        users = list(UserFactory.build_batch(count, **kwargs))
+        users_dict = [
+            UserBase.model_validate(user).model_dump() | {'id': id}
+            for id, user in enumerate(users, start=1)
+        ]
+
         return users_dict
 
     return _create_users
