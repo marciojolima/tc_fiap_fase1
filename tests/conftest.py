@@ -83,13 +83,15 @@ def fake_books_in_db(session):
 
 @pytest.fixture
 def fake_users_in_db(session):
-    def _create_users(count: int, **kwargs):
+    def _create_users(count: int, exclude={}, **kwargs):
         UserFactory._meta.sqlalchemy_session = session
         UserFactory._meta.sqlalchemy_session_persistence = 'commit'
 
         # create_batch persite (com sessão)
         users = list(UserFactory.create_batch(count, **kwargs))
-        users_dict = [UserCreated.model_validate(user).model_dump() for user in users]
+        users_dict = [
+            UserCreated.model_validate(user).model_dump(exclude=exclude) for user in users
+        ]
 
         return users_dict
 
