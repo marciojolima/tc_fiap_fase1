@@ -12,7 +12,7 @@ def test_get_books_top_rated(client, fake_books_in_db):
 
     fake_books_in_db(count_books, rating=Iterator(rates))
     # Act
-    response = client.get(f'/api/v1/insights/top-rated/?limit={count_books - 2}')
+    response = client.get(f'/api/v1/stats/top-rated/?limit={count_books - 2}')
 
     # Assert
     assert response.status_code == HTTPStatus.OK

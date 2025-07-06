@@ -172,3 +172,8 @@ class RespostaHealthCheck(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str  # Bearer
+
+
+class FilterStatPriceRange(BaseModel):
+    min_price: float = Field(default=0.0, ge=0, description='Preço mínimo do livro')
+    max_price: float | None = Field(default=None, description='Preço máximo do livro')
