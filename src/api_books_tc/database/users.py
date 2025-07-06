@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session, defer
 
 from api_books_tc.database.connection import get_session
 from api_books_tc.models import User
-from api_books_tc.security import get_hash_from_password
+from api_books_tc.security.crypt import get_hash_from_password
 
 
 class UserDataBase:
@@ -22,7 +22,7 @@ class UserDataBase:
         self.session.refresh(new_user)
         return new_user
 
-    def find_user_by_username_or_email(self, username: str, email: str) -> User:
+    def find_user_by_username_or_email(self, username: str = None, email: str = None) -> User:
         query = select(self.model)
         query = query.where((self.model.username == username) | (self.model.email == email))
         user = self.session.scalar(query)

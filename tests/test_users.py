@@ -51,7 +51,7 @@ def test_get_all_users(client, fake_users_in_db):
 
     # Act
     response = client.get('/api/v1/users')
-    
+
     # Assert
     assert response.status_code == HTTPStatus.OK
     assert response.json() == {'total': total, 'users': fake_new_users}
