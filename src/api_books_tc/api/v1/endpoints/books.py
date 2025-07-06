@@ -59,16 +59,6 @@ def get_book_by_id(book_id: int, db: DBService):
     return book
 
 
-@router.get('/books/top-rated/', status_code=HTTPStatus.OK, response_model=BooksList)
-def get_books_top_rated(db: DBService, param_request: FilterQueryPage):
-    """Obtém todos os livros por ordem dos mais bem avaliadaos"""
-    count_books, books = db.get_books_top_rated(
-        offset=param_request.offset, limit=param_request.limit
-    )
-
-    return {'books': books, 'total': count_books}
-
-
 @router.get('/categories/', status_code=HTTPStatus.OK, response_model=CategoriesList)
 def get_books_categories(db: DBService, param_request: FilterQueryCategories):
     """Obtém todas as categorias dos livros."""
