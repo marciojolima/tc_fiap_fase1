@@ -7,6 +7,8 @@ from api_books_tc.security.auth import create_jwt
 from api_books_tc.security.crypt import get_hash_from_password
 from api_books_tc.settings import Settings
 
+settings = Settings()
+
 
 def test_jwt():
     # Arrange
@@ -14,7 +16,7 @@ def test_jwt():
 
     # Act
     token = create_jwt(claim)
-    jwt_decoded = decode(jwt=token, key=Settings().SECRET_KEY, algorithms=Settings().ALGORITHM)
+    jwt_decoded = decode(jwt=token, key=settings.SECRET_KEY, algorithms=settings.ALGORITHM)
 
     # Assert
     assert jwt_decoded['test'] == claim['test']

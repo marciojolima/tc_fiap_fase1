@@ -102,13 +102,24 @@ def test_get_books_by_id(client, fake_books_in_db):
     assert 2 == response.json()['id']  # noqa
 
 
-def test_get_books_by_id_must_throw_not_found(client, fake_books_in_db):
+def test_get_books_by_id_must_throw_bad_request(client, fake_books_in_db):
     # Arrange
     fake_books_in_db(3)  # noqa
     # Act
     response = client.get('/api/v1/books/-1')
     # Assert
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+    assert response.json() == {'detail': 'id should be a positive number'}
+
+
+def test_get_books_by_id_must_throw_not_foundt(client, fake_books_in_db):
+    # Arrange
+    fake_books_in_db(3)  # noqa
+    # Act
+    response = client.get('/api/v1/books/4')
+    # Assert
     assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.json() == {'detail': 'Not found'}
 
 
 def test_get_categories(client, fake_books_in_db, session):

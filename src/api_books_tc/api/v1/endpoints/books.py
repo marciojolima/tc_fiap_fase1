@@ -47,6 +47,11 @@ def get_books(db: DBService, param_request: FilterQueryBooks):
 def get_book_by_id(book_id: int, db: DBService):
     """Obtém um livro específico pelo seu ID."""
     try:
+        if book_id <= 0:
+            raise HTTPException(
+                status_code=HTTPStatus.BAD_REQUEST, detail='id should be a positive number'
+            )
+
         book = db.get_book_by_id(book_id)
     except ValueError:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail='Not found')
