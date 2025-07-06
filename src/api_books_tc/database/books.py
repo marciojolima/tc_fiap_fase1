@@ -138,6 +138,13 @@ class BookDataBase:
                 f"'max_price' (R$ {final_max_price:.2f})."
             )
 
+        count_query = (
+            select(func.count(self.model.id))
+            .where(self.model.price.between(min_price, final_max_price))
+            .order_by(self.model.price)
+        )
+        total_books = self.session.scalar(count_query)
+
         query = (
             select(self.model)
             .where(self.model.price.between(min_price, final_max_price))
@@ -145,6 +152,5 @@ class BookDataBase:
         )
 
         books = self.session.scalars(query).all()
-        total_books = len(books)
 
         return total_books, books
