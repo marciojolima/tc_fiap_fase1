@@ -48,7 +48,7 @@ def get_user_tokenizer(db: DBService, token: str = Depends(oauth2_scheme)):
     except DecodeError:
         raise credentials_exception
     except ExpiredSignatureError:
-        credentials_exception.detail='Expired token'
+        credentials_exception.detail = 'Expired token'
         raise credentials_exception
 
     user = db.find_user_by_username_or_email(username=sub_username)
