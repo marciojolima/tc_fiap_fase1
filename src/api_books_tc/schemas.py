@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
@@ -174,6 +174,32 @@ class Token(BaseModel):
     token_type: str  # Bearer
 
 
+class StatsCategories(BaseModel):
+    total_categories: int = Field(description='Número total de categorias')
+    categories_count_distribution: Dict = Field(
+        description='Quantidade de livros em cada categoria'
+    )
+    categories_avg_price_distribution: Dict = Field(
+        description='Preço médio de livros em cada categoria'
+    )
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class StatsOverview(BaseModel):
+    total_books: int = Field(description='Número total de livros disponíveis')
+    average_price: float = Field(description='Preço médio dos livros')
+    rating_distribuition: Dict = Field(description='Distribuição de livros por avaliação')
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class FilterStatPriceRange(BaseModel):
     min_price: float = Field(default=0.0, ge=0, description='Preço mínimo do livro')
     max_price: float | None = Field(default=None, description='Preço máximo do livro')
+
+
+class StatsPriceRange(BaseModel):
+    total: int = Field(description='Número total de livros')
+    books: List[BookSchema] = Field(..., description='Lista de livros')
+    model_config = ConfigDict(from_attributes=True)
