@@ -82,6 +82,7 @@ class BookDataBase:
         # preço medio
         avg_price_query = select(func.round(func.avg(self.model.price), 2))
         average_price = self.session.scalar(avg_price_query)
+        average_price = 0.0 if average_price is None else average_price
 
         # distribuição de rates
         rating_dist_query = (
@@ -130,9 +131,10 @@ class BookDataBase:
             print("INFO: 'max_price' não fornecido. Buscando o maior preço no banco...")
             max_db_price_query = select(func.max(self.model.price))
             final_max_price = self.session.scalar(max_db_price_query)
+            final_max_price = 0.0 if final_max_price is None else final_max_price
             print(f'INFO: Preço máximo encontrado no banco: R$ {final_max_price:.2f}')
 
-        if min_price >= final_max_price:
+        if min_price > final_max_price:
             raise ValueError(
                 f"'min_price' (R$ {min_price:.2f}) must be less than "
                 f"'max_price' (R$ {final_max_price:.2f})."
@@ -152,5 +154,5 @@ class BookDataBase:
         )
 
         books = self.session.scalars(query).all()
-
+        
         return total_books, books
