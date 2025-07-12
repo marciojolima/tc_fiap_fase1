@@ -154,5 +154,5 @@ class BookDataBase:
         )
 
         books = self.session.scalars(query).all()
-        
+
         return total_books, books
