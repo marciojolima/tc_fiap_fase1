@@ -11,7 +11,12 @@ router = APIRouter(prefix='/api/v1/users', tags=['Users'])
 DBService = Annotated[UserDataBase, Depends()]
 
 
-@router.post('/', status_code=HTTPStatus.CREATED, response_model=UserResponse)
+@router.post(
+    '/',
+    status_code=HTTPStatus.CREATED,
+    response_model=UserResponse,
+    summary='Cria um novo usuário no banco de dados',
+)
 async def create_user(userschema: UserBase, db: DBService):
     queried_user = db.find_user_by_username_or_email(
         username=userschema.username, email=userschema.email
@@ -32,7 +37,12 @@ async def create_user(userschema: UserBase, db: DBService):
     return new_user
 
 
-@router.get('/', status_code=HTTPStatus.OK, response_model=UserList)
+@router.get(
+    '/',
+    status_code=HTTPStatus.OK,
+    response_model=UserList,
+    summary='Lista todos os usuários no banco de dados',
+)
 def get_users(db: DBService):
     total, users = db.get_all_users()
 

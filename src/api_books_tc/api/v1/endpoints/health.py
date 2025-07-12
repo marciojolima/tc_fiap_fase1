@@ -14,11 +14,14 @@ HealthService = Annotated[HeathAPI, Depends()]
 @router.get(
     '/api/v1/health',
     tags=['Monitoring'],
-    summary='Verifica a saúde da API e a conexão com o banco de dados',
+    summary='Verifica a saúde da API',
     response_description='Retorna o status da API e do banco de dados',
     response_model=RespostaHealthCheck,
 )
 def get_health_status(hc: HealthService):
+    """
+    Retorna o status da API e do banco de dados
+    """
     is_healthy = hc.run_all_checks()
 
     response_body = {

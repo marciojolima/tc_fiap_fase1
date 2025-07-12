@@ -20,7 +20,12 @@ FilterQueryPage = Annotated[FilterPage, Query()]
 FilterPriceRange = Annotated[FilterStatPriceRange, Query()]
 
 
-@router.get('/overview/', status_code=HTTPStatus.OK, response_model=StatsOverview)
+@router.get(
+    '/overview/',
+    status_code=HTTPStatus.OK,
+    response_model=StatsOverview,
+    summary='Fornece um resumo estatístico da coleção de livros.',
+)
 def get_books_stats_overview(db: DBService):
     """Estatísticas  gerais  da  coleção  (total  de livros,
     preço médio, distribuição de ratings)"""
@@ -34,9 +39,13 @@ def get_books_stats_overview(db: DBService):
     }
 
 
-@router.get('/top-rated/', status_code=HTTPStatus.OK, response_model=BooksList)
+@router.get(
+    '/top-rated/',
+    status_code=HTTPStatus.OK,
+    response_model=BooksList,
+    summary='Obtém todos os livros por ordem dos mais bem avaliadaos',
+)
 def get_books_top_rated(db: DBService, param_request: FilterQueryPage):
-    """Obtém todos os livros por ordem dos mais bem avaliadaos"""
     total_books, books = db.get_books_top_rated(
         offset=param_request.offset, limit=param_request.limit
     )
@@ -44,10 +53,13 @@ def get_books_top_rated(db: DBService, param_request: FilterQueryPage):
     return {'total': total_books, 'books': books}
 
 
-@router.get('/price-range/', status_code=HTTPStatus.OK, response_model=StatsPriceRange)
+@router.get(
+    '/price-range/',
+    status_code=HTTPStatus.OK,
+    response_model=StatsPriceRange,
+    summary='Distribuição de preços por categoria',
+)
 def get_books_stats_price_range(db: DBService, param_request: FilterPriceRange):
-    """Estatísticas  detalhadas  por  categoria (quantidade de livros, preços por categoria)"""
-
     total_books, books = db.get_stats_by_price_range(
         min_price=param_request.min_price, max_price=param_request.max_price
     )
@@ -55,9 +67,16 @@ def get_books_stats_price_range(db: DBService, param_request: FilterPriceRange):
     return {'total': total_books, 'books': books}
 
 
-@router.get('/categories/', status_code=HTTPStatus.OK, response_model=StatsCategories)
+@router.get(
+    '/categories/',
+    status_code=HTTPStatus.OK,
+    response_model=StatsCategories,
+    summary='Lista todas as categorias de livros.',
+)
 def get_categories_stats_overview(db: DBService):
-    """Estatísticas  detalhadas  por  categoria (quantidade de livros, preços por categoria)"""
+    """
+    Retorna uma lista de strings, onde cada string é uma categoria única
+    """
 
     total_categories, categories_count_dist, categories_price_dist = db.get_stats_categories()
 
