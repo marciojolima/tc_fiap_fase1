@@ -1,0 +1,73 @@
+# ============== 
+# ============== Estágio 1: Builder 
+FROM python:3.13-slim AS builder
+ENV POETRY_HOME="/opt/poetry" \
+    POETRY_VERSION="2.1.3" \
+    POETRY_VIRTUALENVS_CREATE=false \
+    PATH="/opt/poetry/bin:$PATH" \
+    APP_DIR=api_books_tc
+# Instala dependências de sistema APENAS para o build
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        curl \
+        gcc \
+        python3-dev \
+        libpq-dev && \
+    curl -sSL https://install.python-poetry.org | python3 - && \
+    apt-get purge -y --auto-remove gcc python3-dev && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /app/src/${APP_DIR} && \
+    touch /app/src/${APP_DIR}/__init__.py
+WORKDIR /app
+# Copia arquivos de dependência primeiro para usar o cache do Docker
+COPY poetry.lock pyproject.toml ./
+
+
+# ============== 
+# ============== Target de DEBUG - Para investigar problemas antes do poetry install 
+FROM builder AS debug
+# Instala ferramentas úteis para debug
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        vim \
+        nano \
+        tree \
+        less && \
+    rm -rf /var/lib/apt/lists/*
+# Deixa o container rodando para debug
+CMD ["/bin/bash"]
+
+
+# ============== 
+# ============== Continua o builder normal
+FROM builder AS builder-continue
+RUN poetry install --no-interaction --no-ansi --without dev
+
+
+# ============== 
+#  ============== Estágio 2: Final - A imagem de produção, segura e enxuta
+FROM python:3.13-slim AS final
+# Instala dependências de sistema APENAS para a execução
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        libpq5 \
+        curl && \
+    rm -rf /var/lib/apt/lists/*
+# Cria o usuário não-root
+RUN useradd --create-home --shell /bin/bash appuser
+WORKDIR /app
+# Define o PYTHONPATH, que é lido pelo interpretador Python no runtime
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONPATH="/app/src"
+# COPIA as libs instaladas do builder-continue
+COPY --from=builder-continue /usr/local/lib/python3.13 /usr/local/lib/python3.13
+COPY --from=builder-continue /usr/local/bin /usr/local/bin
+COPY . .
+# Troca para o usuário não-root DEPOIS de preparar o ambiente
+USER appuser
+EXPOSE 8000
+# HEALTHCHECK agora funcionará, pois 'curl' está na imagem
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+    CMD ["curl", "-f", "http://localhost:8000/api/v1/health"]
+
+CMD ["uvicorn", "--host", "0.0.0.0", "--port", "8000", "api_books_tc.main:app"]

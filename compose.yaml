@@ -1,0 +1,9 @@
+services:
+
+  tc_fiap_fase1_app:
+    image: api_books:latest
+    container_name: app
+    build: .
+    ports:
+      - "8000:8000"
+    env_file: .env
