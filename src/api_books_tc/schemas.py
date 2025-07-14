@@ -132,12 +132,12 @@ class FilterPage(BaseModel):
 
 
 class FilterBook(FilterPage):
-    title: str | None = Field(default=None, min_length=5, max_length=30)
+    title: str | None = Field(default=None, min_length=0, max_length=30)
     category: str | None = Field(default=None)
 
 
 class FilterCategory(BaseModel):
-    name: str | None = Field(default=None, min_length=1, max_length=20)
+    name: str | None = Field(default=None, min_length=0, max_length=20)
 
 
 class StatusServico(str, Enum):
@@ -187,8 +187,9 @@ class StatsCategories(BaseModel):
 
 
 class StatsOverview(BaseModel):
-    total_books: int = Field(description='Número total de livros disponíveis')
+    total_books: int = Field(description='Total de livros disponíveis')
     average_price: float = Field(description='Preço médio dos livros')
+    count_categories: int = Field(description='Quantidade de livros disponíveis')
     rating_distribuition: Dict = Field(description='Distribuição de livros por avaliação')
 
     model_config = ConfigDict(from_attributes=True)

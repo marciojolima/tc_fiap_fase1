@@ -19,15 +19,17 @@ app.include_router(auth.router)
 app.include_router(insights.router)
 
 
-@app.get('/',
-         status_code=HTTPStatus.OK,
-         response_model=MessageStatus,
-         tags=['Root'],
-         summary='Página Inicial da API.')
+@app.get(
+    '/',
+    status_code=HTTPStatus.OK,
+    response_model=MessageStatus,
+    tags=['Root'],
+    summary='Página Inicial da API.',
+)
 def read_root():
     """Endpoint de status"""
     return {
-        'message': "Bem-vindo à API",
+        'message': 'Bem-vindo à API',
         'api': 'Books API - FIAP - Tech Challenge ',
         'version': 'v1',
         'status': 'running',
