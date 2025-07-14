@@ -75,6 +75,8 @@ def get_books_categories(db: DBService, param_request: FilterQueryCategories):
     """
     Retorna uma lista de strings, onde cada string é uma categoria única
     """
+    if not param_request.name:
+        param_request.name = ''
     count_categories, categories = db.get_categories(param_request.name)
 
     return {'categories': categories, 'total': count_categories}

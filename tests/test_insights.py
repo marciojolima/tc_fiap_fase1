@@ -25,13 +25,17 @@ def test_get_stats_books_overview(client, fake_books_in_db):
     # Arrange
     prices = [10.0, 15.0, 10.0, 15.0]
     rates = [5.0, 5.0, 5.0, 4.0]
-    fake_books_in_db(4, rating=Iterator(rates), price=Iterator(prices))
+    categories = ['A', 'B', 'B', 'B']
+    fake_books_in_db(
+        4, rating=Iterator(rates), price=Iterator(prices), category=Iterator(categories)
+    )
 
     # Act
     response = client.get('api/v1/stats/overview/')
     json_expect_response = {
         'total_books': 4,
         'average_price': 12.5,
+        'count_categories': 2,
         'rating_distribuition': {'4.0': 1, '5.0': 3},
     }
 

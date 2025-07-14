@@ -30,11 +30,12 @@ def get_books_stats_overview(db: DBService):
     """Estatísticas  gerais  da  coleção  (total  de livros,
     preço médio, distribuição de ratings)"""
 
-    total_books, avg_price, rating_dist = db.get_stats_overview()
+    total_books, avg_price, count_categories, rating_dist = db.get_stats_overview()
     rating_distribution = {rating: count for rating, count in rating_dist}
     return {
         'total_books': total_books,
         'average_price': avg_price,
+        'count_categories': count_categories,
         'rating_distribuition': rating_distribution,
     }
 

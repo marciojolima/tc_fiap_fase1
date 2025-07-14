@@ -74,7 +74,7 @@ class BookDataBase:
 
         return count_categories, categories
 
-    def get_stats_overview(self) -> Tuple[int, float, List[Tuple]]:
+    def get_stats_overview(self) -> Tuple[int, float, int, List[Tuple]]:
         # total livros
         count_query = select(func.count(self.model.id))
         total_books = self.session.scalar(count_query)
@@ -84,6 +84,10 @@ class BookDataBase:
         average_price = self.session.scalar(avg_price_query)
         average_price = 0.0 if average_price is None else average_price
 
+        # total categorias
+        count_categories_query = select(func.count(distinct(self.model.category)))
+        count_categories = self.session.scalar(count_categories_query)
+
         # distribuição de rates
         rating_dist_query = (
             select(self.model.rating, func.count(self.model.id))
@@ -92,7 +96,7 @@ class BookDataBase:
         )
         rating_dist = self.session.execute(rating_dist_query).all()
 
-        return total_books, average_price, rating_dist
+        return total_books, average_price, count_categories, rating_dist
 
     def get_stats_categories(self) -> Tuple[int, List[Tuple], List[Tuple]]:
         # total de categorias

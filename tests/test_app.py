@@ -6,9 +6,9 @@ def test_root_endpoint_deve_retornar_is_running(client):
 
     assert response.status_code == HTTPStatus.OK
     assert response.json() == {
-        'message': "Hello Book's World!",
+        'message': 'Bem-vindo à API',
         'api': 'Books API - FIAP - Tech Challenge ',
         'version': 'v1',
         'status': 'running',
-        'description': 'CSV with pandas',
+        'description': 'Acesse /docs para ver a documentação interativa.',
     }
