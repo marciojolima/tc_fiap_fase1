@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from api_books_tc.health_check import HeathAPI
+from api_books.health_check import HeathAPI
 
 
 def test_get_health_status_is_running(client):

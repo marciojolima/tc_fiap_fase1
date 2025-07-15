@@ -4,10 +4,10 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 
-from api_books_tc.database.users import UserDataBase
-from api_books_tc.schemas import Token
-from api_books_tc.security.auth import create_jwt
-from api_books_tc.security.crypt import is_valid_password
+from api_books.database.users import UserDataBase
+from api_books.schemas import Token
+from api_books.security.auth import create_jwt
+from api_books.security.crypt import is_valid_password
 
 router = APIRouter(prefix='/api/v1/auth', tags=['Auth'])
 

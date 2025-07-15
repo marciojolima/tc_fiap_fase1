@@ -3,8 +3,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError, ProgrammingError
 from sqlalchemy.orm import sessionmaker
 
-from api_books_tc.models import Book
-from api_books_tc.settings import Settings
+from api_books.models import Book
+from api_books.settings import Settings
 
 
 def update_db():

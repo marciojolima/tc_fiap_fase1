@@ -5,7 +5,7 @@ ENV POETRY_HOME="/opt/poetry" \
     POETRY_VERSION="2.1.3" \
     POETRY_VIRTUALENVS_CREATE=false \
     PATH="/opt/poetry/bin:$PATH" \
-    APP_DIR=api_books_tc
+    APP_DIR=api_books
 # Instala dependências de sistema APENAS para o build
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -70,4 +70,4 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
     CMD ["curl", "-f", "http://localhost:8000/api/v1/health"]
 
-CMD ["uvicorn", "--host", "0.0.0.0", "--port", "8000", "api_books_tc.main:app"]
+CMD ["uvicorn", "--host", "0.0.0.0", "--port", "8000", "api_books.main:app"]

@@ -5,7 +5,7 @@ ENV POETRY_HOME="/opt/poetry" \
     POETRY_VERSION="2.1.3" \
     POETRY_VIRTUALENVS_CREATE=false \
     PATH="/opt/poetry/bin:$PATH" \
-    APP_DIR=api_books_tc
+    APP_DIR=api_books
 # Instala dependências de sistema APENAS para o build
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -41,10 +41,9 @@ ENV PYTHONUNBUFFERED=1 \
 # COPIA as libs instaladas do builder-continue
 COPY --from=builder-continue /usr/local/lib/python3.13 /usr/local/lib/python3.13
 COPY --from=builder-continue /usr/local/bin /usr/local/bin
-COPY ./src/api_books_tc/dashboard ./src/api_books_tc/dashboard
+COPY ./src/dashboard ./src/dashboard
 # Troca para o usuário não-root DEPOIS de preparar o ambiente
-# USER appuser
+USER appuser
 EXPOSE 8501
-
-# streamlit run src/api_books_tc/dashboard/app.py    
-CMD ["streamlit", "run", "src/api_books_tc/dashboard/app.py", "--server.port=8501", "8000", "--server.address=0.0.0.0"]
+   
+CMD ["streamlit", "run", "src/dashboard/app.py", "--server.port=8501", "8000", "--server.address=0.0.0.0"]

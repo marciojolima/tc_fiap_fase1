@@ -3,8 +3,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from api_books_tc.health_check import HeathAPI
-from api_books_tc.schemas import RespostaHealthCheck
+from api_books.health_check import HeathAPI
+from api_books.schemas import RespostaHealthCheck
 
 router = APIRouter(tags=['Monitoring'])
 

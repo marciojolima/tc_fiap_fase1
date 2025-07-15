@@ -3,9 +3,9 @@ from http import HTTPStatus
 import pytest
 from jwt import decode
 
-from api_books_tc.security.auth import create_jwt
-from api_books_tc.security.crypt import get_hash_from_password
-from api_books_tc.settings import Settings
+from api_books.security.auth import create_jwt
+from api_books.security.crypt import get_hash_from_password
+from api_books.settings import Settings
 
 settings = Settings()
 

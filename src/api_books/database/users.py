@@ -4,9 +4,9 @@ from fastapi import Depends
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session, defer
 
-from api_books_tc.database.connection import get_session
-from api_books_tc.models import User
-from api_books_tc.security.crypt import get_hash_from_password
+from api_books.database.connection import get_session
+from api_books.models import User
+from api_books.security.crypt import get_hash_from_password
 
 
 class UserDataBase:

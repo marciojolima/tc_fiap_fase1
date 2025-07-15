@@ -1,5 +1,5 @@
 [project]
-name = "api-books-tc"
+name = "api-books"
 version = "0.1.0"
 description = ""
 authors = [
@@ -23,7 +23,7 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{include = "api_books_tc", from = "src"}]
+packages = [{include = "api_books", from = "src"}]
 
 
 [tool.pytest.ini_options]
@@ -70,11 +70,11 @@ quote-style = 'single'
 lint = 'ruff check'
 pre_format = 'ruff check --fix'
 format = 'ruff format'
-run = 'fastapi dev src/api_books_tc/main.py'
-dash = 'streamlit run src/api_books_tc/dashboard/app.py'
-all = 'fastapi dev src/api_books_tc/main.py & streamlit run src/api_books_tc/dashboard/app.py'
+run = 'fastapi dev src/api_books/main.py'
+dash = 'streamlit run src/dashboard/app.py'
+all = 'fastapi dev src/api_books/main.py & streamlit run src/dashboard/app.py'
 pre_test = 'task lint'
-test = 'pytest -s -x --cov=api_books_tc -vv'
+test = 'pytest -s -x --cov=api_books -vv'
 post_test = 'coverage html'
 
 [tool.coverage.run]

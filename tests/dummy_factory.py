@@ -3,7 +3,7 @@ import random
 import factory
 from factory.alchemy import SQLAlchemyModelFactory
 
-from api_books_tc.models import Book, User
+from api_books.models import Book, User
 
 
 class BookFactory(SQLAlchemyModelFactory):

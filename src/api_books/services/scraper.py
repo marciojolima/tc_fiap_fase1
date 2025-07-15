@@ -11,8 +11,8 @@ import aiohttp
 from aiohttp_retry import ExponentialRetry, RetryClient
 from bs4 import BeautifulSoup
 
-from api_books_tc.services.scraper_exception import PaginatorNotFoundException, ScraperException
-from api_books_tc.settings import Settings
+from api_books.services.scraper_exception import PaginatorNotFoundException, ScraperException
+from api_books.settings import Settings
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'

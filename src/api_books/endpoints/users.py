@@ -3,8 +3,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from api_books_tc.database.users import UserDataBase
-from api_books_tc.schemas import UserBase, UserList, UserResponse
+from api_books.database.users import UserDataBase
+from api_books.schemas import UserBase, UserList, UserResponse
 
 router = APIRouter(prefix='/api/v1/users', tags=['Users'])
 

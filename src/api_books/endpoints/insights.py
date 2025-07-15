@@ -3,8 +3,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
 
-from api_books_tc.database.books import BookDataBase
-from api_books_tc.schemas import (
+from api_books.database.books import BookDataBase
+from api_books.schemas import (
     BooksList,
     FilterPage,
     FilterStatPriceRange,

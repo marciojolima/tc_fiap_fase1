@@ -8,8 +8,8 @@ from fastapi.security import OAuth2PasswordBearer
 from jwt import DecodeError, ExpiredSignatureError, decode, encode
 from pwdlib import PasswordHash
 
-from api_books_tc.database.users import UserDataBase
-from api_books_tc.settings import Settings
+from api_books.database.users import UserDataBase
+from api_books.settings import Settings
 
 settings = Settings()
 pwd_context = PasswordHash.recommended()

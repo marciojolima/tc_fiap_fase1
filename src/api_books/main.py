@@ -2,8 +2,8 @@ from http import HTTPStatus
 
 from fastapi import FastAPI
 
-from api_books_tc.api.v1.endpoints import auth, books, health, insights, scraping, users
-from api_books_tc.schemas import MessageStatus
+from api_books.endpoints import auth, books, health, insights, scraping, users
+from api_books.schemas import MessageStatus
 
 app = FastAPI(
     title='Tech Challenge FIAP-6MELT grupo 28',

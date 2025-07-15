@@ -4,8 +4,8 @@ from fastapi import Depends
 from sqlalchemy import desc, distinct, func, select
 from sqlalchemy.orm import Session
 
-from api_books_tc.database.connection import get_session
-from api_books_tc.models import Book
+from api_books.database.connection import get_session
+from api_books.models import Book
 
 
 class BookDataBase:

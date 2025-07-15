@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
-from api_books_tc.settings import Settings
+from api_books.settings import Settings
 
 engine_conn = create_engine(Settings().DATABASE_URL)
 

@@ -3,9 +3,9 @@ from http import HTTPStatus
 
 from fastapi import APIRouter, Depends
 
-from api_books_tc.security.auth import get_user_tokenizer
-from api_books_tc.services.scraper import AsyncBookScraper
-from api_books_tc.services.update_db_from_csv import update_db
+from api_books.security.auth import get_user_tokenizer
+from api_books.services.scraper import AsyncBookScraper
+from api_books.services.update_db_from_csv import update_db
 
 router = APIRouter(prefix='/api/v1/scraping', tags=['Admin'])
 

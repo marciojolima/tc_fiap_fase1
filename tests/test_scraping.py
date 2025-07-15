@@ -2,7 +2,7 @@ from http import HTTPStatus
 
 import pytest
 
-from api_books_tc.security.crypt import get_hash_from_password
+from api_books.security.crypt import get_hash_from_password
 
 
 @pytest.mark.skipif(condition=True, reason='processamento pesado')

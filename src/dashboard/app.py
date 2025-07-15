@@ -2,8 +2,8 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from api_books_tc.dashboard import api_client
-from api_books_tc.dashboard.custom_locale import formatar_br
+from dashboard import api_client
+from dashboard.custom_locale import formatar_br
 
 # --- Configuração da Página ---
 st.set_page_config(page_title='Dashboard de Livros', page_icon='📚', layout='wide')

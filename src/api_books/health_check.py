@@ -4,7 +4,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
 
-from api_books_tc.database.connection import get_session
+from api_books.database.connection import get_session
 
 EXTERNAL_CONNECTIVITY_TEST_URL = 'https://www.google.com'
 

@@ -9,8 +9,8 @@ from alembic import context
 # access to the values within the .ini file in use.
 from alembic import context
 
-from api_books_tc.models import table_registry
-from api_books_tc.settings import Settings
+from api_books.models import table_registry
+from api_books.settings import Settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
