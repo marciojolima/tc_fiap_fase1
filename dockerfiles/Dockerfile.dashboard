@@ -24,35 +24,14 @@ COPY poetry.lock pyproject.toml ./
 
 
 # ============== 
-# ============== Target de DEBUG - Para investigar problemas antes do poetry install 
-FROM builder AS debug
-# Instala ferramentas úteis para debug
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        vim \
-        nano \
-        tree \
-        less && \
-    rm -rf /var/lib/apt/lists/*
-# Deixa o container rodando para debug
-CMD ["/bin/bash"]
-
-
-# ============== 
 # ============== Continua o builder normal
 FROM builder AS builder-continue
-RUN poetry install --no-interaction --no-ansi --without dev
+RUN poetry install --only dashboard --no-interaction --no-ansi --without dev
 
 
 # ============== 
 #  ============== Estágio 2: Final - A imagem de produção, segura e enxuta
 FROM python:3.13-slim AS final
-# Instala dependências de sistema APENAS para a execução
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        libpq5 \
-        curl && \
-    rm -rf /var/lib/apt/lists/*
 # Cria o usuário não-root
 RUN useradd --create-home --shell /bin/bash appuser
 WORKDIR /app
@@ -62,12 +41,10 @@ ENV PYTHONUNBUFFERED=1 \
 # COPIA as libs instaladas do builder-continue
 COPY --from=builder-continue /usr/local/lib/python3.13 /usr/local/lib/python3.13
 COPY --from=builder-continue /usr/local/bin /usr/local/bin
-COPY . .
+COPY ./src/api_books_tc/dashboard ./src/api_books_tc/dashboard
 # Troca para o usuário não-root DEPOIS de preparar o ambiente
-USER appuser
-EXPOSE 8000
-# HEALTHCHECK agora funcionará, pois 'curl' está na imagem
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-    CMD ["curl", "-f", "http://localhost:8000/api/v1/health"]
+# USER appuser
+EXPOSE 8501
 
-CMD ["uvicorn", "--host", "0.0.0.0", "--port", "8000", "api_books_tc.main:app"]
+# streamlit run src/api_books_tc/dashboard/app.py    
+CMD ["streamlit", "run", "src/api_books_tc/dashboard/app.py", "--server.port=8501", "8000", "--server.address=0.0.0.0"]
