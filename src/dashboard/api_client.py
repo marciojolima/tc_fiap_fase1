@@ -8,7 +8,7 @@ load_dotenv(dotenv_path='.env.dashboard')
 API_BASE_URL = os.getenv('API_URL', 'http://localhost:8000')
 
 
-@st.cache_data(ttl=3600)  # Cache de 1 hora para dados que não mudam frequentemente
+# @st.cache_data(ttl=3600)  # Cache de 1 hora para dados que não mudam frequentemente
 def get_categories(name: str = '') -> list:
     """Busca a lista de categorias da API."""
     try:
@@ -21,7 +21,7 @@ def get_categories(name: str = '') -> list:
         return ['Todas']
 
 
-@st.cache_data(ttl=60)  # Cache de 1 minuto para dados que podem mudar
+# @st.cache_data(ttl=60)  # Cache de 1 minuto para dados que podem mudar
 def get_books(offset: int = 0, limit: int = 30, title: str = '', category: str = '') -> dict:
     """Busca livros com filtros."""
     params = {'offset': offset, 'limit': limit, 'title': title}
@@ -51,7 +51,7 @@ def get_health_status() -> dict:
         }
 
 
-@st.cache_data(ttl=3600)
+# @st.cache_data(ttl=3600)
 def get_overview_stats() -> dict:
     """Busca as estatísticas gerais."""
     try:
@@ -63,7 +63,7 @@ def get_overview_stats() -> dict:
         return {}
 
 
-@st.cache_data(ttl=60)
+# @st.cache_data(ttl=60)
 def get_top_rated_books(limit: int = 5) -> dict:
     """Busca os livros mais bem avaliados."""
     try:
@@ -75,7 +75,7 @@ def get_top_rated_books(limit: int = 5) -> dict:
         return {'total': 0, 'books': []}
 
 
-@st.cache_data(ttl=60)
+# @st.cache_data(ttl=60)
 def get_books_by_price_range(min_price: float, max_price: float) -> dict:
     """Busca livros por faixa de preço."""
     try:
@@ -90,7 +90,7 @@ def get_books_by_price_range(min_price: float, max_price: float) -> dict:
         return {'total': 0, 'books': []}
 
 
-@st.cache_data(ttl=3600)
+# @st.cache_data(ttl=3600)
 def get_category_stats() -> dict:
     """Busca estatísticas de categorias."""
     try:
