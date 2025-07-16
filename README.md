@@ -116,11 +116,30 @@ TECH CHALLENGE_FASE1/
 Siga os passos abaixo para executar o projeto localmente.
 
 ### Pré-requisitos
-
 -   [Git](https://git-scm.com/)
 -   [Docker](https://www.docker.com/products/docker-desktop/)
 -   [Python 3.11+](https://www.python.org/) (para execução sem Docker)
 -   [Poetry](https://python-poetry.org/) (opcional, para execução com Poetry)
+
+### ⚙️ Variáveis de Ambiente
+Para que o projeto funcione corretamente, você precisa criar dois arquivos de variáveis de ambiente na raiz do projeto: um para a **API** e outro para o **Dashboard**.
+Eles definem informações sensíveis ou específicas do ambiente, como URLs, caminhos e chaves de segurança.
+
+#### 📁 `.env.api` – Configuração da API
+Crie um arquivo chamado `.env.api` na raiz do projeto e defina as seguintes variáveis:
+```env
+DATABASE_URL=
+CSV_PATH=
+SCRAPING_TARGET_URL=
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+SECRET_KEY=
+```
+#### 📁 `.env.dashboard` – Configuração da API
+Crie um arquivo chamado `.env.api` na raiz do projeto e defina as seguintes variáveis:
+``` env
+API_URL=<url>:8000
+```
 
 ### Opção 1: Docker (Recomendado)
 
