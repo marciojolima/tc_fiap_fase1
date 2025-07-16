@@ -2,7 +2,9 @@ import os
 
 import requests
 import streamlit as st
+from dotenv import load_dotenv
 
+load_dotenv(dotenv_path='.env.dashboard')
 API_BASE_URL = os.getenv('API_URL', 'http://localhost:8000')
 
 

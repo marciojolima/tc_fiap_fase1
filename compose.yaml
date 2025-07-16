@@ -20,6 +20,6 @@ services:
     container_name: dashboard
     ports:
       - "8501:8501"
-    env_file: .env.dashboard
+    env_file: .env.docker.dashboard
     depends_on:
       - api
