@@ -20,7 +20,7 @@ Este repositório contém o projeto desenvolvido para o **Tech Challenge da Pós
 > **Clique na imagem acima para assistir à apresentação do projeto.**
 > (Substitua `ID_DO_VIDEO` pelo ID do seu vídeo no YouTube)
 
-##  участников (Autores)
+##  Autores
 
 - [Luca](https://github.com/usuario1)
 - [Luciana](https://github.com/usuario2)
@@ -157,9 +157,9 @@ Esta é a forma mais simples e recomendada para executar a aplicação completa 
     ```
 
 3.  **Acesse os serviços:**
-    -   **API:** [http://localhost:8000](http://localhost:8000)
-    -   **Documentação da API (Swagger):** [http://localhost:8000/docs](http://localhost:8000/docs)
-    -   **Dashboard:** [http://localhost:8501](http://localhost:8501)
+    -   **API:** [https://api-books.fly.dev](https://api-books.fly.dev)
+    -   **Documentação da API (Swagger):** [https://api-books.fly.dev/docs](https://api-books.fly.dev/docs)
+    -   **Dashboard:** [https://dashboard-books.fly.dev](https://dashboard-books.fly.dev)
 
 ### Opção 2: Poetry
 
@@ -167,7 +167,7 @@ Para executar a API localmente utilizando Poetry.
 
 1.  **Clone o repositório e navegue até a pasta:**
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
+    git clone https://github.com/marciojolima/tc_fiap_fase1.git
     cd seu-repositorio
     ```
 
@@ -190,7 +190,7 @@ Para executar a API localmente utilizando Poetry.
 
 1.  **Clone o repositório e crie um ambiente virtual:**
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
+    git clone https://github.com/marciojolima/tc_fiap_fase1.git
     cd seu-repositorio
     python -m venv venv
     source venv/bin/activate  # No Windows: venv\Scripts\activate
@@ -211,8 +211,8 @@ Para executar a API localmente utilizando Poetry.
 
 A API possui documentação interativa gerada automaticamente pelo FastAPI, disponível nos seguintes endpoints:
 
--   **Swagger UI:** `<URL_DA_API>/docs`
--   **ReDoc:** `<URL_DA_API>/redoc`
+-   **Swagger UI:** `https://api-books.fly.dev/docs`
+-   **ReDoc:** `https://api-books.fly.dev/redoc`
 
 ### Endpoints
 
@@ -240,7 +240,7 @@ A seguir, a lista completa de endpoints disponíveis:
 **Request:**
 
 ```http
-GET http://localhost:8000/api/v1/stats/overview/
+GET https://api-books.fly.dev/api/v1/stats/overview/
 ```
 
 **Response:**
@@ -265,7 +265,7 @@ GET http://localhost:8000/api/v1/stats/overview/
 **Request:**
 
 ```http
-GET http://localhost:8000/api/v1/books/345
+GET https://api-books.fly.dev/api/v1/books/345
 ```
 
 **Response:**
@@ -289,7 +289,7 @@ GET http://localhost:8000/api/v1/books/345
 O projeto inclui um dashboard desenvolvido com **Streamlit** para visualização e análise dos dados coletados. Ele consome a própria API para exibir insights.
 
 -   **Acesso Local (via Docker):** [http://localhost:8501](http://localhost:8501)
--   **Acesso Público:** [LINK_PARA_O_DASHBOARD_EM_PRODUCAO]
+-   **Acesso Público:** [https://dashboard-books.fly.dev](https://dashboard-books.fly.dev)
 
 ## 🕷️ Sistema de Web Scraping
 
@@ -317,6 +317,7 @@ pytest
 
 A aplicação foi implantada na plataforma **Fly.io** e está publicamente acessível nos seguintes links:
 
--   **API em Produção:** [https://<SEU_APP>.fly.dev/](https://<SEU_APP>.fly.dev/)
--   **Documentação (Swagger):** [https://<SEU_APP>.fly.dev/docs](https://<SEU_APP>.fly.dev/docs)
--   **Dashboard:** [https://<SEU_APP_DASHBOARD>.fly.dev/](https://<SEU_APP_DASHBOARD>.fly.dev/)
+-   **API em Produção:** [https://api-books.fly.dev](https://api-books.fly.dev)
+-   **Documentação (Swagger):** [https://api-books.fly.dev/docs](https://api-books.fly.dev/docs)
+-   **Documentação (Redoc):** [https://api-books.fly.dev/redoc](https://api-books.fly.dev/redoc)
+-   **Dashboard:** [https://dashboard-books.fly.dev/](https://dashboard-books.fly.dev)

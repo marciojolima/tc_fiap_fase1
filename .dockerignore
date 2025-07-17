@@ -42,4 +42,8 @@ dist/
 # Outros arquivos inúteis
 .DS_Store
 Thumbs.db
-./data
+*.pdf
+
+# especificos
+./data/*.csv
+./data/*.db
