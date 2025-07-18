@@ -5,14 +5,15 @@ import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv(dotenv_path='.env.dashboard')
-API_BASE_URL = os.getenv('API_URL', 'http://localhost:8000')
+API_INTERNAL_URL = os.getenv('API_INTERNAL_URL', 'http://localhost:8000')
+API_EXTERNAL_URL = os.getenv('API_EXTERNAL_URL', 'http://localhost:8000')
 
 
 # @st.cache_data(ttl=3600)  # Cache de 1 hora para dados que não mudam frequentemente
 def get_categories(name: str = '') -> list:
     """Busca a lista de categorias da API."""
     try:
-        response = requests.get(f'{API_BASE_URL}/api/v1/categories/', params={'name': name})
+        response = requests.get(f'{API_INTERNAL_URL}/api/v1/categories/', params={'name': name})
         response.raise_for_status()  # Lança um erro para status HTTP 4xx/5xx
         data = response.json()
         return ['Todas'] + data.get('categories', [])
@@ -29,7 +30,7 @@ def get_books(offset: int = 0, limit: int = 30, title: str = '', category: str =
         params['category'] = category
 
     try:
-        response = requests.get(f'{API_BASE_URL}/api/v1/books/', params=params)
+        response = requests.get(f'{API_INTERNAL_URL}/api/v1/books/', params=params)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -40,7 +41,7 @@ def get_books(offset: int = 0, limit: int = 30, title: str = '', category: str =
 def get_health_status() -> dict:
     """Verifica o status da API."""
     try:
-        response = requests.get(f'{API_BASE_URL}/api/v1/health')
+        response = requests.get(f'{API_INTERNAL_URL}/api/v1/health')
         response.raise_for_status()
         return response.json()
     except requests.RequestException:
@@ -55,7 +56,7 @@ def get_health_status() -> dict:
 def get_overview_stats() -> dict:
     """Busca as estatísticas gerais."""
     try:
-        response = requests.get(f'{API_BASE_URL}/api/v1/stats/overview/')
+        response = requests.get(f'{API_INTERNAL_URL}/api/v1/stats/overview/')
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -67,7 +68,9 @@ def get_overview_stats() -> dict:
 def get_top_rated_books(limit: int = 5) -> dict:
     """Busca os livros mais bem avaliados."""
     try:
-        response = requests.get(f'{API_BASE_URL}/api/v1/stats/top-rated/', params={'limit': limit})
+        response = requests.get(
+            f'{API_INTERNAL_URL}/api/v1/stats/top-rated/', params={'limit': limit}
+        )
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -80,7 +83,7 @@ def get_books_by_price_range(min_price: float, max_price: float) -> dict:
     """Busca livros por faixa de preço."""
     try:
         response = requests.get(
-            f'{API_BASE_URL}/api/v1/stats/price-range/',
+            f'{API_INTERNAL_URL}/api/v1/stats/price-range/',
             params={'min_price': min_price, 'max_price': max_price},
         )
         response.raise_for_status()
@@ -94,7 +97,7 @@ def get_books_by_price_range(min_price: float, max_price: float) -> dict:
 def get_category_stats() -> dict:
     """Busca estatísticas de categorias."""
     try:
-        response = requests.get(f'{API_BASE_URL}/api/v1/stats/categories/')
+        response = requests.get(f'{API_INTERNAL_URL}/api/v1/stats/categories/')
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:

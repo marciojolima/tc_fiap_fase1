@@ -1,3 +1,5 @@
+# fly.toml app configuration file generated for dashboard-books on 2025-07-17T23:50:35-03:00
+#
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
@@ -6,7 +8,6 @@ primary_region = 'gru'
 
 [build]
   dockerfile = 'dockerfiles/Dockerfile.dashboard'
-  ignorefile = '.dockerignore'
 
 [http_service]
   internal_port = 8501

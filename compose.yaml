@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/Dockerfile.api
-    entrypoint: ./dockerfiles/entrypoint.sh
     image: api_books:latest
     container_name: api
     ports:

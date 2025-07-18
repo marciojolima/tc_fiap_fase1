@@ -52,7 +52,7 @@ Este repositório contém o projeto desenvolvido para o **Tech Challenge da Pós
 
 ## 📘 Visão Geral do Projeto
 
-Este projeto consiste em uma API RESTful pública para consulta de informações sobre livros. Os dados são extraídos do site [books.toscrape.com](https://books.toscrape.com/) através de um script de web scraping automatizado. As informações coletadas são processadas, armazenadas em um arquivo CSV e, em seguida, replicadas para um banco de dados SQLite para garantir consultas rápidas e eficientes.
+Este projeto consiste em uma **API RESTful** pública para consulta de informações sobre livros. Os dados são extraídos do site [books.toscrape.com](https://books.toscrape.com/) através de um script de web scraping automatizado. As informações coletadas são processadas, armazenadas em um arquivo CSV e, em seguida, replicadas para um banco de dados SQLite para garantir consultas rápidas e eficientes.
 
 A solução foi projetada para ser uma fonte de dados robusta e confiável, ideal para ser consumida por cientistas de dados, sistemas de recomendação ou qualquer aplicação que necessite de um catálogo de livros.
 
@@ -61,7 +61,7 @@ A solução foi projetada para ser uma fonte de dados robusta e confiável, idea
 -   **API Robusta**: Construída com **FastAPI** para alta performance e documentação automática.
 -   **Autenticação Segura**: Implementação de **JWT (JSON Web Tokens)** para proteger endpoints sensíveis.
 -   **Web Scraping Automatizado**: Script para extração de dados, com persistência em CSV e banco de dados.
--   **Banco de Dados**: Utilização de **SQLite** para simplicidade e portabilidade, com migrações gerenciadas pelo **Alembic**.
+-   **Banco de Dados**: Utilização de **SQLite** para simplicidade e portabilidade, com migrações gerenciadas pelo **Alembic** (Fácil alteração para um Banco de Dados mais robusto - ORM - SqlAlchemy).
 -   **Dashboard Interativo**: Painel de visualização de dados e insights criado com **Streamlit**.
 -   **Testes Automatizados**: Cobertura de testes para os principais endpoints da API utilizando **Pytest**.
 -   **Containerização**: Aplicação totalmente conteinerizada com **Docker** e **Docker Compose** para fácil deploy e escalabilidade.
@@ -138,7 +138,8 @@ SECRET_KEY=
 #### 📁 `.env.dashboard` – Configuração da API
 Crie um arquivo chamado `.env.api` na raiz do projeto e defina as seguintes variáveis:
 ``` env
-API_URL=<url>:8000
+API_INTERNAL_URL=<url>:8000
+API_EXTERNAL_URL=<url>:8000
 ```
 
 ### Opção 1: Docker (Recomendado)

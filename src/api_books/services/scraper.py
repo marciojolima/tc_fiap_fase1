@@ -34,6 +34,10 @@ class AsyncBookScraper:
         self.session = None
         self.semaphore = None
 
+        print(f'TARGET_URL configurada: {self.TARGET_URL}')
+        if not self.TARGET_URL.endswith('/'):
+            print('INFO: TARGET_URL não termina com /')
+
     async def _get_bs4(self, url: str) -> Optional[BeautifulSoup]:
         """Faz a requisição HTTP e retorna um objeto BeautifulSoup."""
         async with self.semaphore:
@@ -45,6 +49,7 @@ class AsyncBookScraper:
             except (aiohttp.ClientError, asyncio.TimeoutError) as e:
                 # self.logger.error(f"Erro ao acessar a URL: {url}", exc_info=True)
                 print(f'Erro ao acessar {url}: {e}')
+                print(f'Tipo do erro: {type(e)}')
                 return None
 
     async def _get_total_pages(self) -> int:
@@ -125,7 +130,8 @@ class AsyncBookScraper:
 
         # image and category
         path_book_detail = book_bs4.h3.a['href'].replace('catalogue/', '')
-        url_book_detail = self.TARGET_URL + 'catalogue/' + path_book_detail
+        base_url = self.TARGET_URL.rstrip('/') + '/'
+        url_book_detail = base_url + 'catalogue/' + path_book_detail
         details = await self._get_image_path_and_category(url_book_detail)
 
         if not details:
@@ -145,7 +151,9 @@ class AsyncBookScraper:
         """Gera lista de URLs para todas as páginas de paginação"""
         urls = []
         for page in range(1, total_pages + 1):
-            url = f'{self.TARGET_URL}catalogue/page-{page}.html'
+            # garantir que TARGET_URL termine com /
+            base_url = self.TARGET_URL.rstrip('/') + '/'
+            url = f'{base_url}catalogue/page-{page}.html'
             urls.append(url)
         return urls
 

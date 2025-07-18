@@ -30,7 +30,7 @@ RUN poetry install --only dashboard --no-interaction --no-ansi --without dev
 
 
 # ============== 
-#  ============== Estágio 2: Final - A imagem de produção, segura e enxuta
+# ============== Estágio 2: Final
 FROM python:3.13-slim AS final
 # Cria o usuário não-root
 RUN useradd --create-home --shell /bin/bash appuser
@@ -43,7 +43,7 @@ COPY --from=builder-continue /usr/local/lib/python3.13 /usr/local/lib/python3.13
 COPY --from=builder-continue /usr/local/bin /usr/local/bin
 COPY ./src/dashboard ./src/dashboard
 # Troca para o usuário não-root DEPOIS de preparar o ambiente
-USER appuser
+# USER appuser
 EXPOSE 8501
    
 CMD ["streamlit", "run", "src/dashboard/app.py", "--server.port=8501", "8000", "--server.address=0.0.0.0"]

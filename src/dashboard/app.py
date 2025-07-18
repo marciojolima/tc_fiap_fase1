@@ -17,7 +17,7 @@ with col2:
     st.markdown(
         f"""
         <div style="padding-top: 20px;">
-            <a href="{api_client.API_BASE_URL}/docs"
+            <a href="{api_client.API_EXTERNAL_URL}/docs"
                 target="_blank"
                 style="display: inline-block; padding: 10px 15px;
                 background-color: #0068c9; color: white; text-align: center;
