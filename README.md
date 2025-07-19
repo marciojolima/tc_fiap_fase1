@@ -22,41 +22,41 @@ Este repositório contém o projeto desenvolvido para o **Tech Challenge da Pós
 
 ##  Autores
 
-- [Luca](https://github.com/usuario1)
-- [Luciana](https://github.com/usuario2)
-- [Gabriel](https://github.com/usuario3)
-- [Márcio](https://github.com/usuario3)
+- [Luca](https://github.com/)
+- [Luciana](https://github.com/)
+- [Gabriel](https://github.com/)
+- [Márcio](https://github.com/)
 
 ---
 
 ## 📋 Tabela de Conteúdos
 
-1.  [Visão Geral do Projeto](#-visão-geral-do-projeto)
-2.  [Arquitetura e Features](#-arquitetura-e-features)
-3.  [Stack Tecnológica](#-stack-tecnológica)
-4.  [Estrutura do Projeto](#-estrutura-do-projeto)
-5.  [Instalação e Execução](#-instalação-e-execução)
+1.  [Visão Geral do Projeto](#visão-geral-do-projeto)
+2.  [Arquitetura e Features](#arquitetura-e-features)
+3.  [Stack Tecnológica](#stack-tecnológica)
+4.  [Estrutura do Projeto](#estrutura-do-projeto)
+5.  [Instalação e Execução](#instalação-e-execução)
     - [Pré-requisitos](#pré-requisitos)
     - [Opção 1: Docker (Recomendado)](#opção-1-docker-recomendado)
     - [Opção 2: Poetry](#opção-2-poetry)
-    - [Opção 3: Pip (Ambiente Virtual)](#opção-3-pip-ambiente-virtual)
-6.  [Documentação da API](#-documentação-da-api)
+    - [Opção 3: Pip](#opção-3-pip-ambiente-virtual)
+6.  [Documentação da API](#documentação-da-api)
     - [Endpoints](#endpoints)
-    - [Exemplos de Uso](#-exemplos-de-uso)
+    - [Exemplos de Uso](#exemplos-de-uso)
 7.  [Dashboard Interativo](#-dashboard-interativo)
-8.  [Sistema de Web Scraping](#-sistema-de-web-scraping)
+8.  [Sistema de Web Scraping](#sistema-de-web-scraping)
 9.  [Testes](#-testes)
 10. [Deploy](#-deploy)
 
 ---
 
-## 📘 Visão Geral do Projeto
+## 📘 1. Visão Geral do Projeto
 
 Este projeto consiste em uma **API RESTful** pública para consulta de informações sobre livros. Os dados são extraídos do site [books.toscrape.com](https://books.toscrape.com/) através de um script de web scraping automatizado. As informações coletadas são processadas, armazenadas em um arquivo CSV e, em seguida, replicadas para um banco de dados SQLite para garantir consultas rápidas e eficientes.
 
 A solução foi projetada para ser uma fonte de dados robusta e confiável, ideal para ser consumida por cientistas de dados, sistemas de recomendação ou qualquer aplicação que necessite de um catálogo de livros.
 
-## 🏗️ Arquitetura e Features
+## 🏗️ 2. Arquitetura e Features
 
 -   **API Robusta**: Construída com **FastAPI** para alta performance e documentação automática.
 -   **Autenticação Segura**: Implementação de **JWT (JSON Web Tokens)** para proteger endpoints sensíveis.
@@ -67,7 +67,7 @@ A solução foi projetada para ser uma fonte de dados robusta e confiável, idea
 -   **Containerização**: Aplicação totalmente conteinerizada com **Docker** e **Docker Compose** para fácil deploy e escalabilidade.
 -   **Monitoramento**: Estrutura para logs preparada para futura implementação.
 
-## 🚀 Stack Tecnológica
+## 🚀 3. Stack Tecnológica
 
 | Ferramenta | Descrição |
 | :--- | :--- |
@@ -83,7 +83,7 @@ A solução foi projetada para ser uma fonte de dados robusta e confiável, idea
 | **Docker** | Plataforma de containerização da aplicação. |
 | **Poetry** | Gerenciador de dependências e pacotes. |
 
-## 📁 Estrutura do Projeto
+## 📁 4. Estrutura do Projeto
 
 ```
 TECH CHALLENGE_FASE1/
@@ -111,7 +111,7 @@ TECH CHALLENGE_FASE1/
 
 ---
 
-## ⚙️ Instalação e Execução
+## ⚙️ 5. Instalação e Execução
 
 Siga os passos abaixo para executar o projeto localmente.
 
@@ -119,7 +119,7 @@ Siga os passos abaixo para executar o projeto localmente.
 -   [Git](https://git-scm.com/)
 -   [Docker](https://www.docker.com/products/docker-desktop/)
 -   [Python 3.11+](https://www.python.org/) (para execução sem Docker)
--   [Poetry](https://python-poetry.org/) (opcional, para execução com Poetry)
+-   [Poetry](https://python-poetry.org/)
 
 ### ⚙️ Variáveis de Ambiente
 Para que o projeto funcione corretamente, você precisa criar dois arquivos de variáveis de ambiente na raiz do projeto: um para a **API** e outro para o **Dashboard**.
@@ -138,8 +138,8 @@ SECRET_KEY=
 #### 📁 `.env.dashboard` – Configuração da API
 Crie um arquivo chamado `.env.api` na raiz do projeto e defina as seguintes variáveis:
 ``` env
-API_INTERNAL_URL=<url>:8000
-API_EXTERNAL_URL=<url>:8000
+API_INTERNAL_URL=<url>:<porta>
+API_EXTERNAL_URL=<url>:<porta>
 ```
 
 ### Opção 1: Docker (Recomendado)
@@ -208,7 +208,7 @@ Para executar a API localmente utilizando Poetry.
     ```
 ---
 
-## 📖 Documentação da API
+## 📖 6. Documentação da API
 
 A API possui documentação interativa gerada automaticamente pelo FastAPI, disponível nos seguintes endpoints:
 
@@ -285,21 +285,21 @@ GET https://api-books.fly.dev/api/v1/books/345
 
 ---
 
-## 📊 Dashboard Interativo
+## 📊 7. Dashboard Interativo
 
 O projeto inclui um dashboard desenvolvido com **Streamlit** para visualização e análise dos dados coletados. Ele consome a própria API para exibir insights.
 
 -   **Acesso Local (via Docker):** [http://localhost:8501](http://localhost:8501)
 -   **Acesso Público:** [https://dashboard-books.fly.dev](https://dashboard-books.fly.dev)
 
-## 🕷️ Sistema de Web Scraping
+## 🕷️ 8. Sistema de Web Scraping
 
 O processo de coleta de dados é realizado por um script que navega pelo site [books.toscrape.com](https://books.toscrape.com/), extrai as informações relevantes de cada livro e as armazena em um arquivo `data/books.csv`. Este processo pode ser acionado manualmente através de um endpoint protegido da API.
 
 Para mais detalhes sobre a implementação do script, consulte a documentação específica:
 ➡️ **[Documentação do Script de Scraping](./docs/script_scraper.md)**
 
-## 🧪 Testes
+## 🧪 9. Testes
 
 A aplicação possui uma suíte de testes automatizados para garantir a qualidade e o funcionamento correto dos endpoints da API. Para executá-los:
 
@@ -314,7 +314,7 @@ poetry run pytest
 pytest
 ```
 
-## ☁️ Deploy
+## ☁️ 10. Deploy
 
 A aplicação foi implantada na plataforma **Fly.io** e está publicamente acessível nos seguintes links:
 
