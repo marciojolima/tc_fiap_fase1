@@ -31,22 +31,22 @@ Este repositório contém o projeto desenvolvido para o **Tech Challenge da Pós
 
 ## 📋 Tabela de Conteúdos
 
-1.  [Visão Geral do Projeto](#visão-geral-do-projeto)
-2.  [Arquitetura e Features](#arquitetura-e-features)
-3.  [Stack Tecnológica](#stack-tecnológica)
-4.  [Estrutura do Projeto](#estrutura-do-projeto)
-5.  [Instalação e Execução](#instalação-e-execução)
+1.  [Visão Geral do Projeto](#-1-visão-geral-do-projeto)
+2.  [Arquitetura e Features](#%EF%B8%8F-2-arquitetura-e-features)
+3.  [Stack Tecnológica](#-3-stack-tecnológica)
+4.  [Estrutura do Projeto](#-4-estrutura-do-projeto)
+5.  [Instalação e Execução](#%EF%B8%8F-5-instalação-e-execução)
     - [Pré-requisitos](#pré-requisitos)
     - [Opção 1: Docker (Recomendado)](#opção-1-docker-recomendado)
     - [Opção 2: Poetry](#opção-2-poetry)
     - [Opção 3: Pip](#opção-3-pip-ambiente-virtual)
-6.  [Documentação da API](#documentação-da-api)
+6.  [Documentação da API](#-6-documentação-da-api)
     - [Endpoints](#endpoints)
     - [Exemplos de Uso](#exemplos-de-uso)
-7.  [Dashboard Interativo](#-dashboard-interativo)
-8.  [Sistema de Web Scraping](#sistema-de-web-scraping)
-9.  [Testes](#-testes)
-10. [Deploy](#-deploy)
+7.  [Dashboard Interativo](#-7-dashboard-interativo)
+8.  [Sistema de Web Scraping](#%EF%B8%8F-8-sistema-de-web-scraping)
+9.  [Testes](#-9-testes)
+10. [Deploy](#%EF%B8%8F-10-deploy)
 
 ---
 
