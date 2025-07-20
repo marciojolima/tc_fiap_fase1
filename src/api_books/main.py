@@ -1,6 +1,8 @@
+import os
 from http import HTTPStatus
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 
 from api_books.endpoints import auth, books, health, insights, scraping, users
 from api_books.schemas import MessageStatus
@@ -35,3 +37,23 @@ def read_root():
         'status': 'running',
         'description': 'Acesse /docs para ver a documentação interativa.',
     }
+
+
+@app.get(
+    '/api/v1/download/books',
+    status_code=HTTPStatus.OK,
+    tags=['Download'],
+    summary='Faz o download do arquivo .csv contendo todos os livros cadastrados',
+)
+def download_books():
+    file_path = 'data/books.csv'
+
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail='Arquivo não encontrado')
+
+    return FileResponse(
+        path=file_path,
+        filename='books.csv',
+        media_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename=books.csv'},
+    )
