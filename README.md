@@ -233,6 +233,7 @@ A seguir, a lista completa de endpoints disponíveis:
 | `GET`       | `/api/v1/stats/overview/`      | Fornece um resumo estatístico da coleção.         | Não                      |
 | `GET`       | `/api/v1/stats/top-rated/`     | Lista os livros ordenados pela melhor avaliação.  | Não                      |
 | `GET`       | `/api/v1/stats/price-range/`   | Retorna a distribuição de preços por categoria.   | Não                      |
+| `GET`       | `/api/v1/download/books/`   | Faz download automático de arquivo .csv com todos os livros registrados.   | Não                      |
 
 ### ✨ Exemplos de Uso
 
