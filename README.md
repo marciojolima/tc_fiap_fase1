@@ -1,9 +1,3 @@
-Com certeza! Baseado nas suas informações, criei uma proposta de `README.md` completa e bem estruturada, utilizando as melhores práticas de documentação em Markdown. Adicionei seções, melhorei a formatação e organizei o conteúdo para que fique claro e profissional.
-
-Aqui está o código pronto para você copiar e colar no seu arquivo `README.md`.
-
----
-
 # API de Consulta de Livros - Tech Challenge FIAP
 
 ![Status](https://img.shields.io/badge/status-concluído-green)
@@ -18,7 +12,6 @@ Este repositório contém o projeto desenvolvido para o **Tech Challenge da Pós
 [<img src="https://img.youtube.com/vi/ID_DO_VIDEO/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=ID_DO_VIDEO)
 
 > **Clique na imagem acima para assistir à apresentação do projeto.**
-> (Substitua `ID_DO_VIDEO` pelo ID do seu vídeo no YouTube)
 
 ##  Autores
 
