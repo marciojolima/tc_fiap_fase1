@@ -1,7 +1,3 @@
-Com certeza! Aqui está o arquivo Markdown atualizado para refletir o novo código e incluir as observações sobre a estratégia de retry e as boas práticas para não sobrecarregar o servidor.
-
----
-
 # Fluxo do Script de Scraping - AsyncBookScraper
 
 O fluxo está organizado de forma hierárquica, mostrando cada etapa do processo de extração de dados. Os pontos principais são:
