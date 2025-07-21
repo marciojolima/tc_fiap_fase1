@@ -1,9 +1,3 @@
-Com certeza! Baseado nas suas informações, criei uma proposta de `README.md` completa e bem estruturada, utilizando as melhores práticas de documentação em Markdown. Adicionei seções, melhorei a formatação e organizei o conteúdo para que fique claro e profissional.
-
-Aqui está o código pronto para você copiar e colar no seu arquivo `README.md`.
-
----
-
 # API de Consulta de Livros - Tech Challenge FIAP
 
 ![Status](https://img.shields.io/badge/status-concluído-green)
