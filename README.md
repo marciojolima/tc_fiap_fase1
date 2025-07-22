@@ -51,6 +51,17 @@ A solução foi projetada para ser uma fonte de dados robusta e confiável, idea
 
 ## 🏗️ 2. Arquitetura e Features
 
+### Plano Arquitetural
+
+**Arquitetura atual**
+![Arquitetura Atual](./docs/arquitetura_atual.png)
+
+
+**Arquitetura futura**
+![Arquitetura Futura](./docs/arquitetura_futura.png)
+
+### Features
+
 -   **API Robusta**: Construída com **FastAPI** para alta performance e documentação automática.
 -   **Autenticação Segura**: Implementação de **JWT (JSON Web Tokens)** para proteger endpoints sensíveis.
 -   **Web Scraping Automatizado**: Script para extração de dados, com persistência em CSV e banco de dados.
