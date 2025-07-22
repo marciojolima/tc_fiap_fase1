@@ -140,7 +140,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 SECRET_KEY=
 ```
 #### 📁 `.env.dashboard` – Configuração da API
-Crie um arquivo chamado `.env.api` na raiz do projeto e defina as seguintes variáveis:
+Crie um arquivo chamado `.env.dashboard` na raiz do projeto e defina as seguintes variáveis:
 ``` env
 API_INTERNAL_URL=<url>:<porta>
 API_EXTERNAL_URL=<url>:<porta>
