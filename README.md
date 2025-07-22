@@ -152,8 +152,8 @@ Esta é a forma mais simples e recomendada para executar a aplicação completa 
 
 1.  **Clone o repositório:**
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
-    cd seu-repositorio
+    git clone https://github.com/marciojolima/tc_fiap_fase1.git
+    cd tc_fiap_fase1
     ```
 
 2.  **Inicie os containers com Docker Compose:**
@@ -173,7 +173,7 @@ Para executar a API localmente utilizando Poetry.
 1.  **Clone o repositório e navegue até a pasta:**
     ```bash
     git clone https://github.com/marciojolima/tc_fiap_fase1.git
-    cd seu-repositorio
+    cd tc_fiap_fase1
     ```
 
 2.  **Instale as dependências:**
@@ -191,12 +191,12 @@ Para executar a API localmente utilizando Poetry.
     poetry run uvicorn src.api_books.main:app --host 0.0.0.0 --port 8000 --reload
     ```
 
-### Opção 3: Pip (Ambiente Virtual)
+### Opção 3: Pip
 
 1.  **Clone o repositório e crie um ambiente virtual:**
     ```bash
     git clone https://github.com/marciojolima/tc_fiap_fase1.git
-    cd seu-repositorio
+    cd tc_fiap_fase1
     python -m venv venv
     source venv/bin/activate  # No Windows: venv\Scripts\activate
     ```
