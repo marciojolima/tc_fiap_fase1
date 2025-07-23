@@ -63,7 +63,7 @@ A solução foi projetada para ser uma fonte de dados robusta e confiável, idea
 
 
 ### Cenário de Uso para cientista de dados**
-➡️ **[Descrição de um cenário de uso da api-books](./docs/use_case_md)**
+➡️ **[Descrição de um cenário de uso da api-books](./docs/use_case.md)**
 
 
 ### Features
