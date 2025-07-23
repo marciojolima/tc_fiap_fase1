@@ -49,7 +49,7 @@ Este projeto consiste em uma **API RESTful** pública para consulta de informaç
 
 A solução foi projetada para ser uma fonte de dados robusta e confiável, ideal para ser consumida por cientistas de dados, sistemas de recomendação ou qualquer aplicação que necessite de um catálogo de livros.
 
-## 🏗️ 2. Arquitetura e Features
+## 🏗️ 2. Arquitetura, Cenário de Uso e Features
 
 ### Plano Arquitetural
 
@@ -61,8 +61,10 @@ A solução foi projetada para ser uma fonte de dados robusta e confiável, idea
 ![Arquitetura Futura](./docs/arquitetura_futura.png)
 
 
-**Cenário de Uso para cientista de dados**
+
+### Cenário de Uso para cientista de dados**
 ➡️ **[Descrição de um cenário de uso da api-books](./docs/use_case_md)**
+
 
 ### Features
 
