@@ -3,6 +3,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 
+from api_books.security.auth import get_user_tokenizer
 from api_books.database.users import UserDataBase
 from api_books.schemas import UserBase, UserList, UserResponse
 
@@ -43,7 +44,7 @@ async def create_user(userschema: UserBase, db: DBService):
     response_model=UserList,
     summary='Lista todos os usuários no banco de dados',
 )
-def get_users(db: DBService):
+def get_users(db: DBService, authorized_user=Depends(get_user_tokenizer)):
     total, users = db.get_all_users()
 
     return {'users': users, 'total': total}
