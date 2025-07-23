@@ -60,6 +60,10 @@ A solução foi projetada para ser uma fonte de dados robusta e confiável, idea
 **Arquitetura futura**
 ![Arquitetura Futura](./docs/arquitetura_futura.png)
 
+
+**Cenário de Uso para cientista de dados**
+➡️ **[Descrição de um cenário de uso da api-books](./docs/use_case_md)**
+
 ### Features
 
 -   **API Robusta**: Construída com **FastAPI** para alta performance e documentação automática.
@@ -94,14 +98,16 @@ TECH CHALLENGE_FASE1/
 ├── README.md
 ├── alembic.ini
 ├── compose.yaml
+├── pyproject.toml
 ├── data/
-│   ├── books.csv
-│   └── books.db
 ├── dockerfiles/
 │   ├── Dockerfile.api
 │   └── Dockerfile.dashboard
 ├── docs/
-│   └── script_scraper.md
+│   ├── arquitetura_atual.png
+│   ├── arquitetura_futura.png
+│   ├── script_scraper.md
+│   └── use_case_md
 ├── logs/
 ├── migrations/
 ├── poetry.lock
@@ -111,6 +117,7 @@ TECH CHALLENGE_FASE1/
 │   ├── api_books/
 │   └── dashboard/
 └── tests/
+
 ```
 
 ---
