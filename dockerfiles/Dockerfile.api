@@ -64,8 +64,7 @@ ENV PYTHONUNBUFFERED=1 \
 COPY --from=builder-continue /usr/local/lib/python3.13 /usr/local/lib/python3.13
 COPY --from=builder-continue /usr/local/bin /usr/local/bin
 COPY . .
-RUN chmod +x dockerfiles/entrypoint.sh && \
-    chmod +x dockerfiles/entrypoint.api.sh
+RUN chmod +x dockerfiles/entrypoint.api.sh
 # Troca para o usuário não-root DEPOIS de preparar o ambiente
 ENTRYPOINT ["/app/dockerfiles/entrypoint.api.sh"]
 # USER appuser
