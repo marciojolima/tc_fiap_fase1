@@ -114,7 +114,7 @@ class AsyncBookScraper:
             raise ScraperException('Não foi possível abrir a página inicial.')
 
         image_src_value = book_detail_bs4.select_one('.carousel-inner img')['src']
-        image_path = image_src_value.replace('../', '')
+        image_path = image_src_value.replace('../', '/')
 
         category = book_detail_bs4.select('ul.breadcrumb li a')[-1].text.strip()
 
@@ -144,7 +144,7 @@ class AsyncBookScraper:
             availability,
             rating,
             details['category'],
-            self.TARGET_URL + details['image_url'],
+            base_url + details['image_url'],
         ]
 
     def _generate_page_urls(self, total_pages: int) -> List[str]:
