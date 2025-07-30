@@ -3,7 +3,7 @@ from http import HTTPStatus
 import pytest
 from jwt import decode
 
-from api_books.security.auth import create_jwt
+from api_books.security.auth import create_access_token
 from api_books.security.crypt import get_hash_from_password
 from api_books.settings import Settings
 
@@ -15,7 +15,7 @@ def test_jwt():
     claim = {'test': 'test'}
 
     # Act
-    token = create_jwt(claim)
+    token = create_access_token(claim)
     jwt_decoded = decode(jwt=token, key=settings.SECRET_KEY, algorithms=settings.ALGORITHM)
 
     # Assert

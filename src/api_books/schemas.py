@@ -174,6 +174,10 @@ class Token(BaseModel):
     token_type: str  # Bearer
 
 
+class Login_Token(Token):
+    refresh_token: str
+
+
 class StatsCategories(BaseModel):
     total_categories: int = Field(description='Número total de categorias')
     categories_count_distribution: Dict = Field(

@@ -15,10 +15,10 @@ Este repositório contém o projeto desenvolvido para o **Tech Challenge da Pós
 
 ##  Autores
 
-- [Luca](https://github.com/)
+- [Luca](https://github.com/lucapoit)
 - [Luciana](https://github.com/)
 - [Gabriel](https://github.com/)
-- [Márcio](https://github.com/)
+- [Márcio](https://github.com/marciojolima)
 
 ---
 
@@ -236,7 +236,8 @@ A seguir, a lista completa de endpoints disponíveis:
 | :---------- | :----------------------------- | :------------------------------------------------ | :----------------------- |
 | `GET`       | `/`                            | Página inicial da API.                            | Não                      |
 | `GET`       | `/api/v1/health`               | Verifica a saúde da API.                          | Não                      |
-| `POST`      | `/api/v1/auth/token`           | Autentica um usuário e retorna um token JWT.      | Não                      |
+| `POST`      | `/api/v1/auth/login`           | Autentica um usuário e retorna um **access_token** JWT.      | Não                      |
+| `POST`      | `/api/v1/auth/login`           | Gera um novo **access_token** usando um **refresh_token**      | Sim                      |
 | `GET`       | `/api/v1/users/`               | Lista todos os usuários.                          | Sim (Admin)              |
 | `POST`      | `/api/v1/users/`               | Cria um novo usuário.                             | Não                      |
 | `GET`       | `/api/v1/books/`               | Lista todos os livros (com filtros opcionais).    | Não                      |

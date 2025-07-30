@@ -3,9 +3,9 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from api_books.security.auth import get_user_tokenizer
 from api_books.database.users import UserDataBase
 from api_books.schemas import UserBase, UserList, UserResponse
+from api_books.security.auth import get_user_tokenizer
 
 router = APIRouter(prefix='/api/v1/users', tags=['Users'])
 
