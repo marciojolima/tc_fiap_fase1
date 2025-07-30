@@ -33,7 +33,7 @@ def test_get_token(client, fake_users_in_db):
 
     # Act
     response = client.post(
-        '/api/v1/auth/token',
+        '/api/v1/auth/login',
         data={'username': username, 'password': plain_password},
     )
     token = response.json()
@@ -62,7 +62,7 @@ def test_get_token_invalid_user_or_password(client, fake_users_in_db, params):
 
     # Act
     response = client.post(
-        '/api/v1/auth/token',
+        '/api/v1/auth/login',
         data={'username': request_username, 'password': request_plain_password},
     )
 

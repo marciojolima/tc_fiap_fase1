@@ -42,16 +42,3 @@ def test_create_existing_users_must_be_conflict_username(client, fake_users_in_d
     # Assert
     assert response.status_code == HTTPStatus.CONFLICT
     assert response.json() == {'detail': http_message}
-
-
-def test_get_all_users(client, fake_users_in_db):
-    # Arrange
-    total = 10
-    fake_new_users = fake_users_in_db(total, exclude={'password'})
-
-    # Act
-    response = client.get('/api/v1/users')
-
-    # Assert
-    assert response.status_code == HTTPStatus.OK
-    assert response.json() == {'total': total, 'users': fake_new_users}

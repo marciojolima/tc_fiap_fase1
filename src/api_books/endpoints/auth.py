@@ -54,7 +54,7 @@ def refresh_access_token(current_user=Depends(get_user_refreshed_tokenizer)):
     Recebe um refresh token no header de autorização (Bearer) e retorna
     um novo access token.
     """
-    
-    new_access_token = create_access_token(claims={'sub':current_user.username})
-    
+
+    new_access_token = create_access_token(claims={'sub': current_user.username})
+
     return {'access_token': new_access_token, 'token_type': 'bearer'}

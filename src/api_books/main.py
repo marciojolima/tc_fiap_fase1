@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 
 from api_books.endpoints import auth, books, health, insights, scraping, users
+from api_books.middlewares.logging import LoggingMiddleware
 from api_books.schemas import MessageStatus
 
 app = FastAPI(
@@ -19,6 +20,9 @@ app.include_router(scraping.router)
 app.include_router(health.router)
 app.include_router(auth.router)
 app.include_router(insights.router)
+
+# Logs
+app.add_middleware(LoggingMiddleware)
 
 
 @app.get(

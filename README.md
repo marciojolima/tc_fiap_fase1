@@ -89,6 +89,7 @@ A solução foi projetada para ser uma fonte de dados robusta e confiável, idea
 | **Pydantic** | Validação de dados da API. |
 | **SQLAlchemy** | ORM para interação com o banco de dados. |
 | **BeautifulSoup4** | Biblioteca para extração de dados de páginas HTML (web scraping). |
+| **Loguru** | Registro de cada requisição da api com [loguru](https://github.com/Delgan/loguru). |
 | **Pytest** | Framework para execução dos testes automatizados. |
 | **Docker** | Plataforma de containerização da aplicação. |
 | **Poetry** | Gerenciador de dependências e pacotes. |
