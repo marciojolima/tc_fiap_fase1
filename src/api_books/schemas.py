@@ -208,3 +208,44 @@ class StatsPriceRange(BaseModel):
     total: int = Field(description='Número total de livros')
     books: List[BookSchema] = Field(..., description='Lista de livros')
     model_config = ConfigDict(from_attributes=True)
+
+
+class MLFeature(BaseModel):
+    x1_availability: int = Field(..., description='entrada: quantidade em estoque')
+    x2_rating: float = Field(..., description='entrada: nota média do livro')
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            'example': {
+                'x1_availability': 22,
+                'x2_rating': 5,
+            }
+        },
+    )
+
+
+class MLTraining_Data(BaseModel):
+    x1_availability: int = Field(..., description='entrada: quantidade em estoque')
+    x2_rating: float = Field(..., description='entrada: nota média do livro')
+    y_label_price: float = Field(..., description='saída: preço')
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            'example': {'x1_availability': 4, 'x2_rating': 4, 'y_labels_price': 28.07}
+        },
+    )
+
+
+class MLTraining_DataList(BaseModel):
+    training: List[MLTraining_Data] = Field(..., description='Dados para treino')
+    test: List[MLTraining_Data] = Field(..., description='Dados para test')
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            'training': [
+                {'x1_availability': 22, 'x2_rating': 3, 'y_label_price': 51.77},
+                {'x1_availability': 20, 'x2_rating': 1, 'y_label_price': 50.1},
+            ],
+            'test': [{'x1_availability': 22, 'x2_rating': 4, 'y_label_price': 33.23}],
+        },
+    )

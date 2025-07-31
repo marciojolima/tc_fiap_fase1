@@ -42,7 +42,7 @@ def get_books(db: DBService, param_request: FilterQueryBooks):
         limit=param_request.limit,
     )
 
-    return {'books': books, 'total': count_books}
+    return {'books': books.all(), 'total': count_books}
 
 
 @router.get(

@@ -1,7 +1,7 @@
 from typing import List, Tuple
 
 from fastapi import Depends
-from sqlalchemy import desc, distinct, func, select
+from sqlalchemy import ScalarResult, desc, distinct, func, select
 from sqlalchemy.orm import Session
 
 from api_books.database.connection import get_session
@@ -14,14 +14,14 @@ class BookDataBase:
         self.model = Book
 
     def get_books(
-        self, offset: int, limit: int, title: str, category: str
-    ) -> Tuple[int, List[Book]]:
+        self, offset: int = None, limit: int = None, title: str = None, category: str = None
+    ) -> Tuple[int, ScalarResult]:
         query = select(self.model)
 
-        if title:
+        if title is not None:
             query = query.filter(self.model.title.contains(title))
 
-        if category:
+        if category is not None:
             query = query.filter(self.model.category.contains(category))
 
         if offset is not None:
@@ -30,10 +30,10 @@ class BookDataBase:
         if limit is not None:
             query = query.limit(limit)
 
-        books = self.session.scalars(query).all()
+        books_scalar = self.session.scalars(query)
         count_books = self.session.scalar(select(func.count()).select_from(query.subquery()))
 
-        return count_books, books
+        return count_books, books_scalar
 
     def get_book_by_id(self, book_id: int):
         if book_id is None:

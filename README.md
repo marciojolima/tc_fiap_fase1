@@ -25,7 +25,7 @@ Este repositório contém o projeto desenvolvido para o **Tech Challenge da Pós
 ## 📋 Tabela de Conteúdos
 
 1.  [Visão Geral do Projeto](#-1-visão-geral-do-projeto)
-2.  [Arquitetura e Features](#%EF%B8%8F-2-arquitetura-e-features)
+2.  [Arquitetura, Cenário de Uso e Features](#%EF%B8%8F-2-arquitetura-cen%C3%A1rio-de-uso-e-features)
 3.  [Stack Tecnológica](#-3-stack-tecnológica)
 4.  [Estrutura do Projeto](#-4-estrutura-do-projeto)
 5.  [Instalação e Execução](#%EF%B8%8F-5-instalação-e-execução)
@@ -53,16 +53,16 @@ A solução foi projetada para ser uma fonte de dados robusta e confiável, idea
 
 ### Plano Arquitetural
 
-**Arquitetura atual**
+#### Arquitetura atual
 ![Arquitetura Atual](./docs/arquitetura_atual.png)
 
 
-**Arquitetura futura**
+#### Arquitetura futura
 ![Arquitetura Futura](./docs/arquitetura_futura.png)
 
 
 
-### Cenário de Uso para cientista de dados**
+### Cenário de Uso para cientista de dados
 ➡️ **[Descrição de um cenário de uso da api-books](./docs/use_case.md)**
 
 
@@ -71,7 +71,7 @@ A solução foi projetada para ser uma fonte de dados robusta e confiável, idea
 -   **API Robusta**: Construída com **FastAPI** para alta performance e documentação automática.
 -   **Autenticação Segura**: Implementação de **JWT (JSON Web Tokens)** para proteger endpoints sensíveis.
 -   **Web Scraping Automatizado**: Script para extração de dados, com persistência em CSV e banco de dados.
--   **Banco de Dados**: Utilização de **SQLite** para simplicidade e portabilidade, com migrações gerenciadas pelo **Alembic** (Fácil alteração para um Banco de Dados mais robusto - ORM - SqlAlchemy).
+-   **Banco de Dados**: **SQLite** usando ORM (SqlAlchemy), com migrações gerenciadas pelo **Alembic** (Facilidade de alteração para Banco de Dados mais robusto).
 -   **Dashboard Interativo**: Painel de visualização de dados e insights criado com **Streamlit**.
 -   **Testes Automatizados**: Cobertura de testes para os principais endpoints da API utilizando **Pytest**.
 -   **Containerização**: Aplicação totalmente conteinerizada com **Docker** e **Docker Compose** para fácil deploy e escalabilidade.
@@ -249,6 +249,8 @@ A seguir, a lista completa de endpoints disponíveis:
 | `GET`       | `/api/v1/stats/overview/`      | Fornece um resumo estatístico da coleção.         | Não                      |
 | `GET`       | `/api/v1/stats/top-rated/`     | Lista os livros ordenados pela melhor avaliação.  | Não                      |
 | `GET`       | `/api/v1/stats/price-range/`   | Retorna a distribuição de preços por categoria.   | Não                      |
+| `GET`       | `/api/v1/ml/features/`   | Extrai features prontas para modelos de Machine Learning.   | Não                      |
+| `GET`       | `/api/v1/ml/training-data/`   | Fornece um conjunto de dados de treinamento (features + label).   | Não                      |
 | `GET`       | `/api/v1/download/books/`   | Faz download automático de arquivo .csv com todos os livros registrados.   | Não                      |
 
 ### ✨ Exemplos de Uso
