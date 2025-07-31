@@ -5,7 +5,7 @@ import os
 import re
 import time
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 import aiohttp
 from aiohttp_retry import ExponentialRetry, RetryClient
@@ -84,9 +84,11 @@ class AsyncBookScraper:
         return float(match.group(0))
 
     @staticmethod
-    def _get_book_availability(book: BeautifulSoup) -> bool:
+    def _get_book_availability(book: BeautifulSoup) -> int:
         text = book.find('p', class_='instock availability').text.strip()
-        return True if (text == 'In stock') else False
+        match = re.search(r'\((\d+)\s+available\)', text)
+        stock_qty = int(match.group(1)) if match else 0
+        return stock_qty
 
     @staticmethod
     def _get_book_rating(book: BeautifulSoup) -> str:
@@ -106,46 +108,45 @@ class AsyncBookScraper:
         }
         return word_to_num.get(rating_text.lower(), 0.0)
 
-    async def _get_image_path_and_category(self, url_book_detail: str) -> Dict:
-        """Também precisa ser assíncrona"""
+    def _get_image_url(self, book_detail: BeautifulSoup) -> str:
+        image_src_value = book_detail.select_one('.carousel-inner img')['src']
+        image_path = image_src_value.replace('../', '/')
+        image_path = image_path.lstrip('/')
+        base_url = self.TARGET_URL.rstrip('/') + '/'
 
+        return base_url + image_path
+
+    @staticmethod
+    def _get_category(book_detail: BeautifulSoup) -> str:
+        category = book_detail.select('ul.breadcrumb li a')[-1].text.strip()
+        return category
+
+    async def _access_page_detail(self, book_bs4: BeautifulSoup) -> BeautifulSoup:
+        path_book_detail = book_bs4.h3.a['href'].replace('catalogue/', '')
+        base_url = self.TARGET_URL.rstrip('/') + '/'
+        url_book_detail = base_url + 'catalogue/' + path_book_detail
         book_detail_bs4 = await self._get_bs4(url_book_detail)
         if not book_detail_bs4:
-            raise ScraperException('Não foi possível abrir a página inicial.')
+            raise ScraperException('Não foi possível abrir a página de detalhes.')
 
-        image_src_value = book_detail_bs4.select_one('.carousel-inner img')['src']
-        image_path = image_src_value.replace('../', '/')
-
-        category = book_detail_bs4.select('ul.breadcrumb li a')[-1].text.strip()
-
-        return {'image_url': image_path, 'category': category}
+        return book_detail_bs4
 
     async def _parse_book(self, book_bs4) -> Optional[List]:
         self._current_id += 1
         id = self._current_id
         title = self._get_book_title(book_bs4)
         price = self._get_book_price(book_bs4)
-        availability = self._get_book_availability(book_bs4)
+        # availability = self._get_book_availability(book_bs4)
         rating = self._get_book_rating(book_bs4)
 
-        # image and category
-        path_book_detail = book_bs4.h3.a['href'].replace('catalogue/', '')
-        base_url = self.TARGET_URL.rstrip('/') + '/'
-        url_book_detail = base_url + 'catalogue/' + path_book_detail
-        details = await self._get_image_path_and_category(url_book_detail)
+        # image, category and availability
+        # navegar até pagina de detalhes
+        book_detail_bs4 = await self._access_page_detail(book_bs4)
+        availability = self._get_book_availability(book_detail_bs4)
+        category = self._get_category(book_detail_bs4)
+        image_url = self._get_image_url(book_detail_bs4)
 
-        if not details:
-            raise ScraperException('Não foi possível abrir a página inicial.')
-
-        return [
-            id,
-            title,
-            price,
-            availability,
-            rating,
-            details['category'],
-            base_url + details['image_url'],
-        ]
+        return [id, title, price, availability, rating, category, image_url]
 
     def _generate_page_urls(self, total_pages: int) -> List[str]:
         """Gera lista de URLs para todas as páginas de paginação"""
@@ -209,22 +210,16 @@ class AsyncBookScraper:
         Método principal
         Inicia o scraping de TARGET_URL
         """
-
         self.semaphore = asyncio.Semaphore(self.max_concurrent_requests)
         retry_options = ExponentialRetry(attempts=5, statuses={500, 502, 503, 504})
+
         async with RetryClient(retry_options=retry_options) as self.session:
             self.session._client.headers.update(HEADERS)
-
             total_pages = await self._get_total_pages()
-
             page_urls = self._generate_page_urls(total_pages)
-
             pages_bs4 = await self._fetch_all_pages(page_urls)
-
             books_bs4 = self._extract_books_from_pages(pages_bs4)
-
             books_data = await self._parse_all_books(books_bs4)
-
             self._save_to_csv(books_data, self.OUTPUT_CSV_FILE)
 
         # permitir que a limpeza do aiohttp seja concluída sem erros.

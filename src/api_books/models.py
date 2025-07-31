@@ -13,7 +13,7 @@ class Book:
     rating: Mapped[float] = mapped_column(nullable=False)
     category: Mapped[str] = mapped_column(nullable=False)
     image_url: Mapped[str]
-    availability: Mapped[bool] = mapped_column(nullable=False, default=False)
+    availability: Mapped[int] = mapped_column(nullable=False, default=0)
 
 
 @table_registry.mapped_as_dataclass

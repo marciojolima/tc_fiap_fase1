@@ -199,7 +199,7 @@ with tab2:
                 'title': st.column_config.TextColumn('Título', width='large'),
                 'price': st.column_config.NumberColumn('Preço (R$)', format='R$ %.2f'),
                 'rating': st.column_config.NumberColumn('Avaliação', format='%d ⭐'),
-                'availability': st.column_config.CheckboxColumn('Disponível?'),
+                'availability': st.column_config.NumberColumn('Qtde Disponível'),
                 'category': 'Categoria',
             },
             hide_index=True,

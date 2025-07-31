@@ -19,7 +19,7 @@ class BookBase(BaseModel):
     title: str = Field(..., description='Título do livro')
     price: float = Field(..., ge=0, description='Preço do livro')
     rating: float = Field(..., ge=0, le=5, description='Avaliação do livro (0-5)')
-    availability: bool = Field(..., description='Disponibilidade do livro')
+    availability: int = Field(..., description='Disponibilidade do livro')
     category: str = Field(..., description='Categoria do livro')
     image_url: Optional[str] = Field(None, description='URL da imagem do livro')
     model_config = ConfigDict(
@@ -29,7 +29,7 @@ class BookBase(BaseModel):
                 'title': 'The Great Adventure',
                 'price': 29.99,
                 'rating': 4.5,
-                'availability': True,
+                'availability': 5,
                 'category': 'Fiction',
                 'image_url': 'https://example.com/book.jpg',
             }
@@ -90,7 +90,7 @@ class BooksList(BaseModel):
                         'title': 'The Great Adventure',
                         'price': 29.99,
                         'rating': 4.5,
-                        'availability': True,
+                        'availability': 22,
                         'category': 'Fiction',
                         'image_url': 'https://example.com/book1.jpg',
                     },

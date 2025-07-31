@@ -30,7 +30,7 @@ logger.add(
     ),
     rotation='5 MB',  # Cria um novo arquivo quando o atual atingir 5 MB.
     retention='30 days',
-    compression='zip', 
+    compression='zip',
     enqueue=True,  # Torna o log assíncrono para não bloquear a thread principal
     backtrace=True,  # Mostra o stacktrace completo em caso de erros.
     diagnose=True,  # Adiciona informações de diagnóstico em exceções.
