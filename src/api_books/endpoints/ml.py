@@ -5,20 +5,18 @@ from typing import Annotated, List
 from fastapi import APIRouter, Depends, HTTPException, Query
 
 from api_books.database.books import BookDataBase
+from api_books.ml_model import fake_model
 from api_books.schemas import (
-    CategoriesList,
     FilterBook,
-    FilterCategory,
-    FilterPage,
     MLFeature,
     MLTraining_DataList,
+    PredictionInput,
+    PredictionOutput,
 )
 
 router = APIRouter(prefix='/api/v1/ml', tags=['ML Ready'])
 
 FilterQueryBooks = Annotated[FilterBook, Query()]
-FilterQueryCategories = Annotated[FilterCategory, Query()]
-FilterQueryPage = Annotated[FilterPage, Query()]
 DBService = Annotated[BookDataBase, Depends()]
 
 
@@ -87,3 +85,22 @@ def get_training_data(db: DBService):
         )
 
     return {'training': training_features, 'test': test_features}
+
+
+@router.post(
+    '/predictions/',
+    status_code=HTTPStatus.OK,
+    response_model=PredictionOutput,
+    summary='Prevê o preço de um livro com base em suas features.',
+)
+async def get_predictions(input: PredictionInput):
+    """
+    Recebe a disponibilidade (`availability`) e a avaliação (`rating`) de um livro
+    e utiliza um modelo de Machine Learning (simulado) para prever seu preço.
+    """
+    try:
+        return fake_model(input)
+    except Exception:
+        raise HTTPException(
+            status_code=HTTPStatus.BAD_REQUEST, detail='Features inválidas ou erro na predição'
+        )

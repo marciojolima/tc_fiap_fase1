@@ -249,3 +249,54 @@ class MLTraining_DataList(BaseModel):
             'test': [{'x1_availability': 22, 'x2_rating': 4, 'y_label_price': 33.23}],
         },
     )
+
+
+class PredictionInput(BaseModel):
+    x1_availability: int = Field(
+        ..., 
+        ge=0, 
+        le=100,
+        description='Quantidade disponível em estoque do livro',
+        examples=[10, 25, 50]
+    )
+    x2_rating: float = Field(
+        ..., 
+        ge=1.0, 
+        le=5.0,
+        description='Avaliação média do livro (1.0 a 5.0 estrelas)',
+        examples=[3.5, 4.2, 4.8]
+    )
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            "example": {
+                "x1_availability": 15,
+                "x2_rating": 4.3
+            }
+        }
+    )
+
+
+class PredictionOutput(BaseModel):
+    predicted_price: float = Field(
+        ...,
+        ge=0.0,
+        description='Preço previsto pelo modelo em reais (R$)',
+        examples=[45.50, 78.90, 120.00]
+    )
+    confidence: float = Field(
+        ...,
+        ge=0.0,
+        le=1.0,
+        description='Nível de confiança da predição (0.0 a 1.0)',
+        examples=[0.85, 0.92, 0.78]
+    )
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            "example": {
+                "predicted_price": 87.50,
+                "confidence": 0.89
+            }
+        }
+    )

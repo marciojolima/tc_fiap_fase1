@@ -32,10 +32,10 @@ Este repositório contém o projeto desenvolvido para o **Tech Challenge da Pós
     - [Pré-requisitos](#pré-requisitos)
     - [Opção 1: Docker (Recomendado)](#opção-1-docker-recomendado)
     - [Opção 2: Poetry](#opção-2-poetry)
-    - [Opção 3: Pip](#opção-3-pip-ambiente-virtual)
+    - [Opção 3: Pip](#op%C3%A7%C3%A3o-3-pip)
 6.  [Documentação da API](#-6-documentação-da-api)
     - [Endpoints](#endpoints)
-    - [Exemplos de Uso](#exemplos-de-uso)
+    - [Exemplos de Uso](#-exemplos-de-uso)
 7.  [Dashboard Interativo](#-7-dashboard-interativo)
 8.  [Sistema de Web Scraping](#%EF%B8%8F-8-sistema-de-web-scraping)
 9.  [Testes](#-9-testes)
@@ -251,6 +251,7 @@ A seguir, a lista completa de endpoints disponíveis:
 | `GET`       | `/api/v1/stats/price-range/`   | Retorna a distribuição de preços por categoria.   | Não                      |
 | `GET`       | `/api/v1/ml/features/`   | Extrai features prontas para modelos de Machine Learning.   | Não                      |
 | `GET`       | `/api/v1/ml/training-data/`   | Fornece um conjunto de dados de treinamento (features + label).   | Não                      |
+| `POST`      | `/api/v1/ml/predictions/`   | Prevê o preço de um livro com base em suas features (modelo fake).   | Não                      |
 | `GET`       | `/api/v1/download/books/`   | Faz download automático de arquivo .csv com todos os livros registrados.   | Não                      |
 
 ### ✨ Exemplos de Uso
@@ -299,6 +300,36 @@ GET https://api-books.fly.dev/api/v1/books/345
   "category": "Mystery",
   "image_url": "https://books.toscrape.com/media/cache/27/40/274003f2720f82844873945b87af6c19.jpg",
   "id": 345
+}
+```
+
+#### Predição
+
+Usado um modelo fake com função que simula um modelo ML usando uma fórmula matemática simples:
+
+(Atribuição de pesos e valores "ideais".)
+Preço = 25 (base) + (availability × 2) + (rating × 10)
+Confiança baseada no rating (quanto maior o rating, maior a confiança)
+
+**Request:**
+
+```http
+POST https://api-books.fly.dev/api/v1/ml/predictions/
+```
+
+```json
+{
+  "x1_availability": 15,
+  "x2_rating": 4.3
+}
+```
+
+**Response:**
+
+```json
+{
+  "predicted_price": 98,
+  "confidence": 0.86
 }
 ```
 
