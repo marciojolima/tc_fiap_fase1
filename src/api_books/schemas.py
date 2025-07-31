@@ -170,12 +170,56 @@ class RespostaHealthCheck(BaseModel):
 
 
 class Token(BaseModel):
-    access_token: str
-    token_type: str  # Bearer
+    access_token: str = Field(
+        ...,
+        min_length=1,
+        description='Token JWT para autenticação da API',
+        examples=[
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzEyMyIsImV4cCI6MTY0MDk5NTIwMH0.abc123',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY0MDk5NTIwMH0.def456',
+        ],
+    )
+    token_type: str = Field(
+        default='Bearer',
+        description='Tipo do token de autenticação (sempre Bearer para JWT)',
+        examples=['Bearer'],
+    )
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            'example': {
+                'access_token': (
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
+                    'eyJzdWIiOiJ1c2VyXzEyMyIsImV4cCI6MTY0MDk5NTIwMH0.'
+                    'signature'
+                ),
+                'token_type': 'Bearer',
+            }
+        },
+    )
 
 
 class Login_Token(Token):
-    refresh_token: str
+    refresh_token: str = Field(
+        ...,
+        min_length=1,
+        description='Token de renovação para obter novos access tokens sem re-login',
+        examples=['rt_abc123xyz789refresh_token_example', 'rt_def456uvw012another_refresh_token'],
+    )
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            'example': {
+                'access_token': (
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
+                    'eyJzdWIiOiJ1c2VyXzEyMyIsImV4cCI6MTY0MDk5NTIwMH0.'
+                    'signature'
+                ),
+                'token_type': 'Bearer',
+                'refresh_token': 'rt_abc123xyz789refresh_token_example_long_string',
+            }
+        },
+    )
 
 
 class StatsCategories(BaseModel):
@@ -253,27 +297,22 @@ class MLTraining_DataList(BaseModel):
 
 class PredictionInput(BaseModel):
     x1_availability: int = Field(
-        ..., 
-        ge=0, 
+        ...,
+        ge=0,
         le=100,
         description='Quantidade disponível em estoque do livro',
-        examples=[10, 25, 50]
+        examples=[10, 25, 50],
     )
     x2_rating: float = Field(
-        ..., 
-        ge=1.0, 
+        ...,
+        ge=1.0,
         le=5.0,
         description='Avaliação média do livro (1.0 a 5.0 estrelas)',
-        examples=[3.5, 4.2, 4.8]
+        examples=[3.5, 4.2, 4.8],
     )
     model_config = ConfigDict(
         from_attributes=True,
-        json_schema_extra={
-            "example": {
-                "x1_availability": 15,
-                "x2_rating": 4.3
-            }
-        }
+        json_schema_extra={'example': {'x1_availability': 15, 'x2_rating': 4.3}},
     )
 
 
@@ -282,21 +321,16 @@ class PredictionOutput(BaseModel):
         ...,
         ge=0.0,
         description='Preço previsto pelo modelo em reais (R$)',
-        examples=[45.50, 78.90, 120.00]
+        examples=[45.50, 78.90, 120.00],
     )
     confidence: float = Field(
         ...,
         ge=0.0,
         le=1.0,
         description='Nível de confiança da predição (0.0 a 1.0)',
-        examples=[0.85, 0.92, 0.78]
+        examples=[0.85, 0.92, 0.78],
     )
     model_config = ConfigDict(
         from_attributes=True,
-        json_schema_extra={
-            "example": {
-                "predicted_price": 87.50,
-                "confidence": 0.89
-            }
-        }
+        json_schema_extra={'example': {'predicted_price': 87.50, 'confidence': 0.89}},
     )
