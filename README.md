@@ -16,8 +16,8 @@ Este repositório contém o projeto desenvolvido para o **Tech Challenge da Pós
 ##  Autores
 
 - [Luca](https://github.com/lucapoit)
-- [Luciana](https://github.com/)
-- [Gabriel](https://github.com/)
+- [Luciana](https://github.com/Lucca-26)
+- [Gabriel](https://github.com/gabrieljordan23/)
 - [Márcio](https://github.com/marciojolima)
 
 ---
