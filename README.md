@@ -33,6 +33,7 @@ Este repositório contém o projeto desenvolvido para o **Tech Challenge da Pós
     - [Opção 1: Docker (Recomendado)](#opção-1-docker-recomendado)
     - [Opção 2: Poetry](#opção-2-poetry)
     - [Opção 3: Pip](#op%C3%A7%C3%A3o-3-pip)
+    - [Dicas para execução](#Dicas-para-execução)
 6.  [Documentação da API](#-6-documentação-da-api)
     - [Endpoints](#endpoints)
     - [Exemplos de Uso](#-exemplos-de-uso)
@@ -138,23 +139,25 @@ Siga os passos abaixo para executar o projeto localmente.
 ### ⚙️ Variáveis de Ambiente
 Para que o projeto funcione corretamente, você precisa criar dois arquivos de variáveis de ambiente na raiz do projeto: um para a **API** e outro para o **Dashboard**.
 Eles definem informações sensíveis ou específicas do ambiente, como URLs, caminhos e chaves de segurança.
+<span style="color: red; font-weight: bold;">Seguem os valores de atribuição da variáveis de ambiente utilizadas no projeto para facilitar a instalação, ressaltando, no entanto, que não é uma boa prática a exposição delas fora do escopo do projeto.<span>
 
 #### 📁 `.env.api` – Configuração da API
 Crie um arquivo chamado `.env.api` na raiz do projeto e defina as seguintes variáveis:
 ```env
-DATABASE_URL=
-CSV_PATH=
-SCRAPING_TARGET_URL=
+DATABASE_URL="sqlite:///data/books.db" # atribuído para fins didáticos. Não é uma boa prática
+CSV_PATH="data/books.csv" # atribuído para fins didáticos. Não é um boa prática
+SCRAPING_TARGET_URL="https://books.toscrape.com/" # atribuído para fins didáticos. Não é uma boa prática
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 REFRESH_TOKEN_EXPIRE_DAYS=7
-SECRET_KEY=
+SECRET_KEY="seu-segredo-nao-divulgue"  # atribuído para fins didáticos. Não é uma boa prática
+
 ```
 #### 📁 `.env.dashboard` – Configuração da API
 Crie um arquivo chamado `.env.dashboard` na raiz do projeto e defina as seguintes variáveis:
 ``` env
-API_INTERNAL_URL=<url>:<porta>
-API_EXTERNAL_URL=<url>:<porta>
+API_INTERNAL_URL=http://localhost:8000
+API_EXTERNAL_URL=http://localhost:8000
 ```
 
 ### Opção 1: Docker (Recomendado)
@@ -166,6 +169,14 @@ Esta é a forma mais simples e recomendada para executar a aplicação completa 
     git clone https://github.com/marciojolima/tc_fiap_fase1.git
     cd tc_fiap_fase1
     ```
+    
+    ```
+    #### 📁 `.env.docker.dashboard` – para o docker
+    Crie um arquivo chamado `.env.docker.dashboard` na raiz do projeto e defina as seguintes variáveis:
+    ``` env
+    API_URL=http://api:8000
+    ```
+
 
 2.  **Inicie os containers com Docker Compose:**
     ```bash
@@ -173,9 +184,9 @@ Esta é a forma mais simples e recomendada para executar a aplicação completa 
     ```
 
 3.  **Acesse os serviços:**
-    -   **API:** [https://api-books.fly.dev](https://api-books.fly.dev)
-    -   **Documentação da API (Swagger):** [https://api-books.fly.dev/docs](https://api-books.fly.dev/docs)
-    -   **Dashboard:** [https://dashboard-books.fly.dev](https://dashboard-books.fly.dev)
+    -   **API:** [http://localhost:8000](http://localhost:8000)
+    -   **Documentação da API (Swagger):** [http://localhost:8000/docs](http://localhost:8000/docs)
+    -   **Dashboard:** [http://localhost:8501](http://localhost:8501)
 
 ### Opção 2: Poetry
 
@@ -217,10 +228,17 @@ Para executar a API localmente utilizando Poetry.
     pip install -r requirements.txt
     ```
 
-4.  **Inicie o servidor da API:**
+3.  **Inicie o servidor da API:**
     ```bash
     uvicorn src.api_books.main:app --host 0.0.0.0 --port 8000 --reload
     ```
+
+### Dicas para execução
+
+Como se trata de um projeto com fins educativos, os endpoints de usuários não contemplam todas as funcionalidades necessárias para um gerenciamento completo.
+
+Recomenda-se criar um usuário (padrão admin) por meio do endpoint `POST /api/v1/users/`. Em seguida, utilize o Swagger para autenticar-se clicando no ícone de cadeado, e então acione o endpoint `POST /api/v1/scraping/trigger` para realizar o carregamento de todos os livros.
+
 ---
 
 ## 📖 6. Documentação da API
