@@ -139,7 +139,9 @@ Siga os passos abaixo para executar o projeto localmente.
 ### ⚙️ Variáveis de Ambiente
 Para que o projeto funcione corretamente, você precisa criar dois arquivos de variáveis de ambiente na raiz do projeto: um para a **API** e outro para o **Dashboard**.
 Eles definem informações sensíveis ou específicas do ambiente, como URLs, caminhos e chaves de segurança.
-<span style="color: red; font-weight: bold;">Seguem os valores de atribuição da variáveis de ambiente utilizadas no projeto para facilitar a instalação, ressaltando, no entanto, que não é uma boa prática a exposição delas fora do escopo do projeto.<span>
+
+
+**IMPORTANTE: Seguem os valores de atribuição da variáveis de ambiente utilizadas no projeto para facilitar a instalação, ressaltando, no entanto, que não é uma boa prática a exposição delas fora do escopo do projeto.**
 
 #### 📁 `.env.api` – Configuração da API
 Crie um arquivo chamado `.env.api` na raiz do projeto e defina as seguintes variáveis:
