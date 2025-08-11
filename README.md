@@ -372,7 +372,6 @@ POST https://api-books.fly.dev/api/v1/ml/predictions/
 O projeto inclui um dashboard desenvolvido com **Streamlit** para visualização e análise dos dados coletados. Ele consome a própria API para exibir insights.
 
 -   **Acesso Local (via Docker):** [http://localhost:8501](http://localhost:8501)
--   **Acesso manual:** ```streamlit run src/dashboard/app.py --server.port=8501 --server.address=localhost```
 -   **Acesso Público:** [https://dashboard-books.fly.dev](https://dashboard-books.fly.dev)
 
 ## 🕷️ 8. Sistema de Web Scraping
