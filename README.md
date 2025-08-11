@@ -113,6 +113,7 @@ TECH CHALLENGE_FASE1/
 │   ├── script_scraper.md
 │   └── use_case_md
 ├── logs/
+│   └── api_requests.log
 ├── migrations/
 ├── poetry.lock
 ├── pyproject.toml
