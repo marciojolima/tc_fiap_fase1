@@ -242,10 +242,15 @@ Para executar a API localmente utilizando Poetry.
     ```
 
 5.  **Para iniciar o Dashboard:**
+    Linux
     ```bash
     PYTHONPATH=src python -c "import sys,os; sys.path.insert(0,'src'); os.system('streamlit run src/dashboard/app.py --server.port=8501 --server.address=localhost')"
     ```
 
+    Windows
+    ```powershell
+    $env:PYTHONPATH = "src"; python -c "import sys,os; sys.path.insert(0,'src'); os.system('streamlit run src/dashboard/app.py --server.port=8501 --server.address=localhost')"
+    ```
 
 ### Dicas para execução
 
