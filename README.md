@@ -230,10 +230,22 @@ Para executar a API localmente utilizando Poetry.
     pip install -r requirements.txt
     ```
 
-3.  **Inicie o servidor da API:**
+3.  **Execute as migrações do banco de dados:**
     ```bash
-    uvicorn src.api_books.main:app --host 0.0.0.0 --port 8000 --reload
+    alembic upgrade head
     ```
+
+4.  **Inicie o servidor da API:**
+    Os comandos abaixo são longos para manter a compatibilidade com o projeto construído via **poetry**.
+    ```bash
+    python -c "import sys,os; sys.path.insert(0,'src');import uvicorn; uvicorn.run('api_books.main:app', host='localhost', port=8000, reload=True)"
+    ```
+
+5.  **Para iniciar o Dashboard:**
+    ```bash
+    PYTHONPATH=src python -c "import sys,os; sys.path.insert(0,'src'); os.system('streamlit run src/dashboard/app.py --server.port=8501 --server.address=localhost')"
+    ```
+
 
 ### Dicas para execução
 
@@ -360,6 +372,7 @@ POST https://api-books.fly.dev/api/v1/ml/predictions/
 O projeto inclui um dashboard desenvolvido com **Streamlit** para visualização e análise dos dados coletados. Ele consome a própria API para exibir insights.
 
 -   **Acesso Local (via Docker):** [http://localhost:8501](http://localhost:8501)
+-   **Acesso manual:** ```streamlit run src/dashboard/app.py --server.port=8501 --server.address=localhost```
 -   **Acesso Público:** [https://dashboard-books.fly.dev](https://dashboard-books.fly.dev)
 
 ## 🕷️ 8. Sistema de Web Scraping
