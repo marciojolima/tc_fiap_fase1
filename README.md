@@ -137,6 +137,13 @@ Siga os passos abaixo para executar o projeto localmente.
 -   [Python 3.11+](https://www.python.org/) (para execução sem Docker)
 -   [Poetry](https://python-poetry.org/)
 
+
+### Clone o repositório e altere para o caminho raiz do projeto:
+    ```bash
+    git clone https://github.com/marciojolima/tc_fiap_fase1.git
+    cd tc_fiap_fase1
+    ```
+
 ### ⚙️ Variáveis de Ambiente
 Para que o projeto funcione corretamente, você precisa criar dois arquivos de variáveis de ambiente na raiz do projeto: um para a **API** e outro para o **Dashboard**.
 Eles definem informações sensíveis ou específicas do ambiente, como URLs, caminhos e chaves de segurança.
@@ -167,11 +174,7 @@ API_EXTERNAL_URL=http://localhost:8000
 
 Esta é a forma mais simples e recomendada para executar a aplicação completa (API e Dashboard).
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone https://github.com/marciojolima/tc_fiap_fase1.git
-    cd tc_fiap_fase1
-    ```
+1.  **criar aquivo .env.docker.dashboard:**
     
     ```
     #### 📁 `.env.docker.dashboard` – para o docker
@@ -195,33 +198,28 @@ Esta é a forma mais simples e recomendada para executar a aplicação completa 
 
 Para executar a API localmente utilizando Poetry.
 
-1.  **Clone o repositório e navegue até a pasta:**
-    ```bash
-    git clone https://github.com/marciojolima/tc_fiap_fase1.git
-    cd tc_fiap_fase1
-    ```
+Certifique-se que o prompt esteja na pasta raiz do projeto
 
-2.  **Instale as dependências:**
+1.  **Instale as dependências:**
     ```bash
     poetry install
     ```
-
-3.  **Execute as migrações do banco de dados:**
+2.  **Execute as migrações do banco de dados:**
     ```bash
     poetry run alembic upgrade head
     ```
 
-4.  **Inicie o servidor da API:**
+3.  **Inicie o servidor da API:**
     ```bash
     poetry run uvicorn src.api_books.main:app --host 0.0.0.0 --port 8000 --reload
     ```
 
 ### Opção 3: Pip
 
-1.  **Clone o repositório e crie um ambiente virtual:**
+Certifique-se que o prompt esteja na pasta raiz do projeto
+
+1.  **Crie um ambiente virtual:**
     ```bash
-    git clone https://github.com/marciojolima/tc_fiap_fase1.git
-    cd tc_fiap_fase1
     python -m venv venv
     source venv/bin/activate  # No Windows: venv\Scripts\activate
     ```
