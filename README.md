@@ -9,7 +9,7 @@ Este repositório contém o projeto desenvolvido para o **Tech Challenge da Pós
 
 ## 🎥 Vídeo de Apresentação
 
-[![Video](https://img.youtube.com/vi/ID_DO_VIDEO/minresdefault.jpg)](https://screenapp.io/app/#/shared/9UMF1vo1Ep)
+[![Video](./docs/screenapp.png)](https://screenapp.io/app/#/shared/9UMF1vo1Ep)
 
 > **Clique na imagem acima para assistir à apresentação do projeto.**
 
